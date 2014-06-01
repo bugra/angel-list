@@ -226,13 +226,18 @@ class AngelList(object):
     return _get_request(_RESERVATIONS_ID.format(c_api=_C_API_BEGINNING,
                                                         api=_API_VERSION,
                                                         at=self.access_token))
-
+  # TODO
   def get_accrediation(self):
-    print(_ACCREDIATION.format(c_api=_C_API_BEGINNING, api=_API_VERSION,
-                                        at=self.access_token))
-    return _get_request(_ACCREDIATION.format(c_api=_C_API_BEGINNING,
+    try:
+    #print(_ACCREDIATION.format(c_api=_C_API_BEGINNING, api=_API_VERSION,
+    #                                    at=self.access_token))
+      return _get_request(_ACCREDIATION.format(c_api=_C_API_BEGINNING,
                                                      api=_API_VERSION,
                                                      at=self.access_token))
+    except e:
+      raise NotImplementedError()
+
+
   def post_intros(self, id_, note=None):
     raise NotImplementedError()
 
