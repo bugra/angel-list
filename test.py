@@ -210,6 +210,29 @@ class AngelListTestCase(unittest.TestCase):
     assert int(c_['quality']) == 10
 
 
+  def test_startup_comments(self):
+    id_ = 6702
+    c_ = angel.get_startup_comments(id_)
+    comment_keys = sorted(['comment', 'created_at', 'id', 'user'])
+    assert type(c_) == list
+    if c_ and len(c_) > 0:
+      f_ = c_[0] # first comment
+      assert sorted(list(f_.iterkeys())) == comment_keys
+      # Need to change
+      # I do not know which order Angellist sends these comments
+      # If there does not a particular order exist, or the order does not
+      # depend on the comment created time
+      # Then the following test may not work and become meaningless
+      assert f_['comment'] == "AngelList is badass! Thank you guys, you are changing the way companies get funded and that's awesome!"
+      assert f_['created_at'] == '2011-08-05T06:07:50Z'
+      assert int(f_['id']) == 3800
+      assert f_['user']['angellist_url'] == 'https://angel.co/thomask'
+      assert f_['user']['bio'] == 'Founder of @angelpad, Ex-@Google Product Manager, Startup Advisor, Angel Investor http://angelpad.org/b/scoble-thomas-korte-2012/'
+      assert int(f_['user']['follower_count']) == 11175
+      assert int(f_['user']['id']) == 111
+      assert f_['user']['name'] == 'Thomas Korte'
+
+
 
 if __name__ == '__main__':
   unittest.main()
