@@ -82,6 +82,23 @@ class AngelListTestCase(unittest.TestCase):
     assert s_['url'] == 'https://angel.co/cb-insights-1'
 
 
+  def test_users_batch(self):
+    n = 30
+    ids = list(map(lambda k: str(k), range(n)))
+    batch_ = angel.get_users_batch(ids)
+    assert len(batch_) <= n
+    keys = ['facebook_url', 'bio', 'name', 'roles', 'github_url',
+            'angellist_url', 'image', 'linkedin_url', 'locations', 'skills',
+            'twitter_url', 'what_ive_built', 'dribbble_url', 'behance_url',\
+            'blog_url', 'aboutme_url', 'follower_count', 'online_bio_url',
+            'investor', 'id']
+    if batch_ and len(batch_) > 0:
+      assert sorted(list(batch_[0].iterkeys())) == sorted(keys)
+
+
+
+
+
   def test_comments(self):
     comments_ = angel.get_comments('Startup', KARMA_ID)
     assert type(comments_) == list
