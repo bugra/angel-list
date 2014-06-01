@@ -23,7 +23,9 @@ _FEEDS = '{c_api}/{api}/feed?access_token{at}'
 _STARTUP = '{c_api}/{api}/startups/{id_}?access_token={at}'
 _STARTUP_F = '{c_api}/{api}/startups/{id_}/followers?access_token={at}'
 _STARTUP_S = '{c_api}/{api}/startups/search?access_token={at}&slug={slug}'
+_STARTUP_R = '{c_api}/{api}/startups/{id_}/roles?direction={direction}?access_token={at}'
 _S_TAGS = '{c_api}/{api}/tags/{id_}/startups?access_token={at}'
+
 
 _SELF = '{c_api}/{api}/me?access_token={at}'
 _USERS = '{c_api}/{api}/users/{id_}?access_token={at}'
@@ -260,7 +262,6 @@ class AngelList(object):
     url = _USERS_BATCH.format(c_api=_C_API_BEGINNING,
                                             api=_API_VERSION,
                                             ids=ids_)
-    print(url)
     return _get_request(url)
 
 
@@ -333,40 +334,39 @@ class AngelList(object):
 
   def get_startup_followers_ids(self, id_):
     return _get_request(S__FOLLOWER_IDS.format(c_api=_C_API_BEGINNING,
-                                                  api=_API_VERSION,
-                                                  id_=id_,
-                                                  at=self.access_token))
-
-  def get_startup(self, id_):
-    return _get_request(_STARTUP.format(c_api=_C_API_BEGINNING,
-                                                api=_API_VERSION,
-                                                id_=id_,
-                                                at=self.access_token))
-
-  def get_startup_tags(self, id_):
-    return _get_request(_S_TAGS.format(c_api=_C_API_BEGINNING,
                                                api=_API_VERSION,
                                                id_=id_,
                                                at=self.access_token))
-  # TODO
-  def get_startup_roles(self, id_):
-    return _get_request(S_ROLES_TEMPLATE.format(c_api=_C_API_BEGINNING,
-                                                api=_API_VERSION,
-                                                id_=id_,
-                                                at=self.access_token))
-
-  # TODO
-  def get_startup_updates(self, id_):
-    return _get_request(S_UPDATE_TEMPLATE.format(c_api=_C_API_BEGINNING,
-                                                api=_API_VERSION,
-                                                id_=id_,
-                                                at=self.access_token))
 
 
+  # STARTUP Section
+  def get_startup(self, id_):
+    return _get_request(_STARTUP.format(c_api=_C_API_BEGINNING,
+                                        api=_API_VERSION,
+                                        id_=id_,
+                                        at=self.access_token))
+
+
+  def get_startup_tags(self, id_):
+    return _get_request(_S_TAGS.format(c_api=_C_API_BEGINNING,
+                                       api=_API_VERSION,
+                                       id_=id_,
+                                       at=self.access_token))
+
+
+  def get_startup_roles(self, id_, direction='incoming'):
+    return _get_request(_STARTUP_R.format(c_api=_C_API_BEGINNING,
+                                          api=_API_VERSION,
+                                          id_=id_,
+                                          direction=direction,
+                                          at=self.access_token))
+
+
+  # SEARCH Section
   def get_search_for_slugs(self, slug):
     return _get_request(_SLUG_SEARCH.format(c_api=_C_API_BEGINNING,
-                                                    api=_API_VERSION,
-                                                    slug=_format_query(slug)))
+                                            api=_API_VERSION,
+                                            slug=_format_query(slug)))
 
 
   def get_search(self, query, type_=None):
@@ -374,8 +374,8 @@ class AngelList(object):
     type_: 'User', 'Startup', 'MarketTag', 'LocationTag'
     """
     search_url = _S_SEARCH.format(c_api=_C_API_BEGINNING,
-                                          api=_API_VERSION,
-                                          query=_format_query(query))
+                                  api=_API_VERSION,
+                                  query=_format_query(query))
     if type_ is not None:
       search_url + _TYPE_SUFFIX.format(type_=type_)
     return _get_request(search_url)

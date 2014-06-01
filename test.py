@@ -38,6 +38,7 @@ angel = angel.AngelList(config.CLIENT_ID,
                         config.ACCESS_TOKEN
                        )
 
+
 class AngelListTestCase(unittest.TestCase):
 
 
@@ -94,8 +95,6 @@ class AngelListTestCase(unittest.TestCase):
             'investor', 'id']
     if batch_ and len(batch_) > 0:
       assert sorted(list(batch_[0].iterkeys())) == sorted(keys)
-
-
 
 
 
@@ -191,6 +190,24 @@ class AngelListTestCase(unittest.TestCase):
     assert p_['snippet'] == 'Introducing Ukranian accelerator Eastlabs and its first teams'
     assert p_['posted_at'] == '2012-04-11'
     assert p_['owner_type'] == 'Startup'
+
+
+  def test_startup_roles(self):
+    # Companies that Andreesseen Horowitz is tagged in
+    # https://angel.co/api/spec/startups#GET_startups_%3Aid_roles
+    id_ = 37820
+    direction_ = 'outgoing'
+    a16z_ = angel.get_startup_roles(id_, direction=direction_)
+    keys = sorted(['per_page', 'last_page', 'total', 'startup_roles', 'page'])
+    assert sorted(list(a16z_.iterkeys())) == keys
+    a_ = a16z_['startup_roles'][0]
+    assert 'startup' in a_
+    c_ = a_['startup']
+    assert c_['angellist_url'] == 'https://angel.co/andreessen-horowitz'
+    assert c_['company_url'] == 'http://www.a16z.com/'
+    assert c_['high_concept'] == 'Helping the greatest tech entrepreneurs build the best tech companies'
+    assert c_['name'] == 'Andreessen Horowitz'
+    assert int(c_['quality']) == 10
 
 
 
