@@ -45,3 +45,6 @@ docs/_build/
 
 # Notebook Directory
 notebooks/
+
+# Credentials
+config.py
