@@ -217,7 +217,7 @@ class AngelList(object):
       return _get_request(_RESERVATIONS.format(c_api=_C_API_BEGINNING,
                                                        api=_API_VERSION,
                                                        t=self.access_token))
-    except e:
+    except (RuntimeError, TypeError, NameError) as e:
       raise NotImplementedError()
 
 
@@ -234,7 +234,7 @@ class AngelList(object):
       return _get_request(_ACCREDIATION.format(c_api=_C_API_BEGINNING,
                                                      api=_API_VERSION,
                                                      at=self.access_token))
-    except e:
+    except (RuntimeError, TypeError, NameError) as e:
       raise NotImplementedError()
 
 
