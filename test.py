@@ -38,12 +38,27 @@ class AngelListTestCase(unittest.TestCase):
     assert self_['angellist_url'] == config.ANGELLIST_URL
     assert int(self_['id']) == config.ID
 
+
   def test_search_for_slugs(self):
     slug_ = angel.get_search_for_slugs('karma')
     assert int(slug_['id']) == 29741
     assert slug_['name'] == 'Karma'
     assert slug_['type'] == 'Startup'
     assert slug_['url'] == 'https://angel.co/karma'
+
+
+  def test_search(self):
+    # Get the first item of the list
+    # Check if the search of angel list actually works
+    search_ = angel.get_search('cb insights')
+    s_ = search_[0]
+    assert type(search_) == list
+    assert type(s_) == dict
+    print s_['id']
+    assert int(s_['id']) == 344401
+    assert s_['name'] == 'CB Insights'
+    assert s_['type'] == 'Startup'
+    assert s_['url'] == 'https://angel.co/cb-insights-1'
 
 
 if __name__ == '__main__':
