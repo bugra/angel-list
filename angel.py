@@ -28,6 +28,7 @@ _S_TAGS = '{c_api}/{api}/tags/{id_}/startups?access_token={at}'
 _SELF = '{c_api}/{api}/me?access_token={at}'
 _USERS = '{c_api}/{api}/users/{id_}?access_token={at}'
 _USERS_S = '{c_api}/{api}/users/search?access_token={at}'
+_USERS_BATCH = '{c_api}/{api}/users/batch?ids={ids}'
 _S_SEARCH = '{c_api}/{api}/search?query={query}'
 _SLUG_SEARCH = '{c_api}/{api}/search/slugs?query={slug}'
 _COM = '{c_api}/{api}/comments?commentable_type={ct}&commentable_id={id_}'
@@ -217,11 +218,11 @@ class AngelList(object):
       return _get_request(_RESERVATIONS.format(c_api=_C_API_BEGINNING,
                                                        api=_API_VERSION,
                                                        t=self.access_token))
-    except (RuntimeError, TypeError, NameError) as e:
+    except (RuntimeError, TypeError, NameError):
       raise NotImplementedError()
 
-
-  # requires scope "invest"
+  # TODO
+  # requires scope "invest"?
   def get_reservations_of_startup(self, id_):
     return _get_request(_RESERVATIONS_ID.format(c_api=_C_API_BEGINNING,
                                                         api=_API_VERSION,
@@ -234,12 +235,13 @@ class AngelList(object):
       return _get_request(_ACCREDIATION.format(c_api=_C_API_BEGINNING,
                                                      api=_API_VERSION,
                                                      at=self.access_token))
-    except (RuntimeError, TypeError, NameError) as e:
+    except (RuntimeError, TypeError, NameError):
       raise NotImplementedError()
 
 
   def post_intros(self, id_, note=None):
     raise NotImplementedError()
+
 
 
   def get_users(self, id_):
@@ -248,6 +250,21 @@ class AngelList(object):
                                               api=_API_VERSION,
                                               at=self.access_token))
 
+  def get_users_batch(self, ids):
+    """
+    Ids: a list of ids that we want to return
+    """
+    # Allowed maximum number of ids is 50
+    assert len(ids) <= 50
+    ids_ = ','.join(ids)
+    url = _USERS_BATCH.format(c_api=_C_API_BEGINNING,
+                                            api=_API_VERSION,
+                                            ids=ids_)
+    print(url)
+    return _get_request(url)
+
+
+  # TODO
   # Not working
   def get_users_by_search(self, slug, email=None):
     request_url = _USERS_S.format(c_api=_C_API_BEGINNING,
@@ -337,6 +354,7 @@ class AngelList(object):
                                                 api=_API_VERSION,
                                                 id_=id_,
                                                 at=self.access_token))
+
   # TODO
   def get_startup_updates(self, id_):
     return _get_request(S_UPDATE_TEMPLATE.format(c_api=_C_API_BEGINNING,
@@ -344,10 +362,12 @@ class AngelList(object):
                                                 id_=id_,
                                                 at=self.access_token))
 
+
   def get_search_for_slugs(self, slug):
     return _get_request(_SLUG_SEARCH.format(c_api=_C_API_BEGINNING,
                                                     api=_API_VERSION,
                                                     slug=_format_query(slug)))
+
 
   def get_search(self, query, type_=None):
     """Search for query, type_ is optional.
@@ -360,11 +380,7 @@ class AngelList(object):
       search_url + _TYPE_SUFFIX.format(type_=type_)
     return _get_request(search_url)
 
+
 if __name__ == '__main__':
-  # AngelList-Python Application Credentials
-  # Learn how to reach these numbers in a smarter way
-  #CLIENT_ID = 'SUCH_CLIENT_ID'
-  #CLIENT_SECRET = 'VERY_SECRET'
-  #ACCESS_TOKEN = 'WOW'
-  #angel = AngelList(CLIENT_ID, CLIENT_SECRET, ACCESS_TOKEN)
-  pass
+  import config
+  angel = AngelList(config.CLIENT_ID, config.CLIENT_SECRET, config.ACCESS_TOKEN)
