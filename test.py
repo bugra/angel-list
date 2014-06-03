@@ -6,7 +6,7 @@ import angel
 """
 CLIENT_ID =
 CLIENT_SECRET =
-ACCESS_TOKEN = 
+ACCESS_TOKEN =
 
 ### If you want to test your profile (test_self())
 ### Fill the credentials with the information
@@ -228,10 +228,23 @@ class AngelListTestCase(unittest.TestCase):
       assert int(f_['id']) == 3800
       assert f_['user']['angellist_url'] == 'https://angel.co/thomask'
       assert f_['user']['bio'] == 'Founder of @angelpad, Ex-@Google Product Manager, Startup Advisor, Angel Investor http://angelpad.org/b/scoble-thomas-korte-2012/'
-      assert int(f_['user']['follower_count']) == 11175
+      # Based on the assumption: followers will only increase
+      assert int(f_['user']['follower_count']) >= 11175
       assert int(f_['user']['id']) == 111
       assert f_['user']['name'] == 'Thomas Korte'
 
+
+  def test_startups_filtered_by(self, filter_='raising'):
+    expected_keys = sorted(['last_page', 'per_page', 'startups', 'total', 'page'])
+    s_ = angel.get_startups_filtered_by(filter_=filter_)
+    assert type(s_) == dict
+    assert sorted(list(s_.iterkeys())) == expected_keys
+    i_ = s_['startups'][0]
+    expected_keys = sorted(['status', 'crunchbase_url', 'fundraising', 'video_url', 'company_url', 'company_type', 'locations', 'quality',
+                                          'id', 'angellist_url', 'screenshots', 'follower_count', 'hidden', 'launch_date', 'markets', 'community_profile',
+                                          'product_desc', 'twitter_url', 'high_concept', 'updated_at', 'thumb_url', 'company_size', 'logo_url', 'name',
+                                          'created_at', 'blog_url'])
+    assert sorted(list(i_.iterkeys())) == expected_keys
 
 
 if __name__ == '__main__':
