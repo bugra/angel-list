@@ -23,7 +23,9 @@ _FEEDS = '{c_api}/{api}/feed?access_token{at}'
 _STARTUP = '{c_api}/{api}/startups/{id_}?access_token={at}'
 _STARTUP_F = '{c_api}/{api}/startups/{id_}/followers?access_token={at}'
 _STARTUP_S = '{c_api}/{api}/startups/search?access_token={at}&slug={slug}'
-_STARTUP_R = '{c_api}/{api}/startups/{id_}/roles?direction={direction}?access_token={at}'
+# Updated one => Need to update the url in the function
+_STARTUP_R = '{c_api}/{api}/startups/{id_}/roles?v=1'
+_STARTUP_R_DEPRECATED = '{c_api}/{api}/startups/{id_}/roles?direction={direction}?access_token={at}'
 _STARTUP_RAISING = '{c_api}/{api}/startups?filter={filter_}'
 _STARTUP_C = '{c_api}/{api}/startups/{id_}/comments?access_token={at}'
 _STARTUP_T = '{c_api}/{api}/tags/{id_}/startups?access_token={at}'
@@ -355,13 +357,13 @@ class AngelList(object):
                                        id_=id_,
                                        at=self.access_token))
 
+  def get_startup_roles_deprecated(self, id_, direction='incoming'):
+    return _get_request(_STARTUP_R_DEPRECATED.format(c_api=_C_API_BEGINNING,
+                                                                                    api=_API_VERSION,
+                                                                                    id_=id_,
+                                                                                    direction=direction,
+                                                                                    at=self.access_token))
 
-  def get_startup_roles(self, id_, direction='incoming'):
-    return _get_request(_STARTUP_R.format(c_api=_C_API_BEGINNING,
-                                          api=_API_VERSION,
-                                          id_=id_,
-                                          direction=direction,
-                                          at=self.access_token))
 
   def get_startup_comments(self, id_):
     return _get_request(_STARTUP_C.format(c_api=_C_API_BEGINNING,
@@ -375,6 +377,7 @@ class AngelList(object):
                                                                          api=_API_VERSION,
                                                                          filter_=filter_)
     return _get_request(url)
+
 
   # SEARCH Section
   def get_search_for_slugs(self, slug):
