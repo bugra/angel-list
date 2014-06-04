@@ -97,7 +97,6 @@ class AngelListTestCase(unittest.TestCase):
       assert sorted(list(batch_[0].iterkeys())) == sorted(keys)
 
 
-
   def test_comments(self):
     comments_ = angel.get_comments('Startup', KARMA_ID)
     assert type(comments_) == list
@@ -245,6 +244,23 @@ class AngelListTestCase(unittest.TestCase):
                                           'product_desc', 'twitter_url', 'high_concept', 'updated_at', 'thumb_url', 'company_size', 'logo_url', 'name',
                                           'created_at', 'blog_url'])
     assert sorted(list(i_.iterkeys())) == expected_keys
+
+  # DEPRECATED
+  def test_startup_roles_deprecated(self, id_=2674):
+    expected_keys = sorted(['per_page', 'last_page', 'total', 'startup_roles', 'page'])
+    directions = ['incoming', 'outgoing']
+    for direction in directions:
+      r_ = angel.get_startup_roles_deprecated(id_, direction=direction)
+      assert type(r_) == dict
+      assert expected_keys == sorted(list(r_.iterkeys()))
+      roles_ = r_['startup_roles']
+      assert type(roles_) == list
+      p_ = roles_[0]
+      e_ = sorted(['confirmed', 'ended_at', 'title', 'created_at', 'startup', 'tagged', 'role', 'started_at', 'id'])
+      assert e_ == sorted(list(p_.iterkeys()))
+
+
+
 
 
 if __name__ == '__main__':
