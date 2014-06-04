@@ -28,7 +28,11 @@ _STARTUP_R = '{c_api}/{api}/startup_roles?v=1'
 _STARTUP_R_DEPRECATED = '{c_api}/{api}/startups/{id_}/roles?direction={direction}?access_token={at}'
 _STARTUP_RAISING = '{c_api}/{api}/startups?filter={filter_}'
 _STARTUP_C = '{c_api}/{api}/startups/{id_}/comments?access_token={at}'
-_STARTUP_T = '{c_api}/{api}/tags/{id_}/startups?access_token={at}'
+_TAGS = '{c_api}/{api}/tags/{id_}/?access_token={at}'
+_TAGS_CHILDREN = '{c_api}/{api}/tags/{id_}/children?access_token={at}'
+_TAGS_PARENTS = '{c_api}/{api}/tags/{id_}/parents?access_token={at}'
+_TAGS_STARTUPS = '{c_api}/{api}/tags/{id_}/startups?access_token={at}'
+_TAGS_USERS = '{c_api}/{api}/tags/{id_}/users?access_token={at}'
 
 _STATUS_U = '{c_api}/{api}/status_updates?startup_id={startup_id}?access_token={at}'
 
@@ -342,6 +346,39 @@ class AngelList(object):
                                                api=_API_VERSION,
                                                id_=id_,
                                                at=self.access_token))
+  # Tags
+  def get_tags(self, id_):
+    return _get_request(_TAGS.format(c_api=_C_API_BEGINNING,
+                                       api=_API_VERSION,
+                                       id_=id_,
+                                       at=self.access_token))
+
+
+  def get_tags_children(self, id_):
+    return _get_request(_TAGS_CHILDREN.format(c_api=_C_API_BEGINNING,
+                                                                      api=_API_VERSION,
+                                                                      id_=id_,
+                                                                      at=self.access_token))
+
+  def get_tags_parents(self, id_):
+    return _get_request(_TAGS_PARENTS.format(c_api=_C_API_BEGINNING,
+                                                                      api=_API_VERSION,
+                                                                      id_=id_,
+                                                                      at=self.access_token))
+
+
+  def get_tags_startups(self, id_):
+    return _get_request(_TAGS_STARTUPS.format(c_api=_C_API_BEGINNING,
+                                                                      api=_API_VERSION,
+                                                                      id_=id_,
+                                                                      at=self.access_token))
+
+
+  def get_tags_users(self, id_):
+    return _get_request(_TAGS_USERS.format(c_api=_C_API_BEGINNING,
+                                                                      api=_API_VERSION,
+                                                                      id_=id_,
+                                                                      at=self.access_token))
 
 
   # STARTUP Section
@@ -351,12 +388,6 @@ class AngelList(object):
                                         id_=id_,
                                         at=self.access_token))
 
-
-  def get_startup_tags(self, id_):
-    return _get_request(_STARTUP_T.format(c_api=_C_API_BEGINNING,
-                                       api=_API_VERSION,
-                                       id_=id_,
-                                       at=self.access_token))
 
   def get_startup_roles_deprecated(self, id_, direction='incoming'):
     return _get_request(_STARTUP_R_DEPRECATED.format(c_api=_C_API_BEGINNING,
