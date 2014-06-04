@@ -245,6 +245,19 @@ class AngelListTestCase(unittest.TestCase):
                                           'created_at', 'blog_url'])
     assert sorted(list(i_.iterkeys())) == expected_keys
 
+  def test_startup_roles(self):
+    # Only Startup id
+    startup_id = 6702
+    s_ = angel.get_startup_roles(startup_id=startup_id)
+    expected_keys = sorted(['per_page', 'last_page', 'total', 'startup_roles', 'page'])
+    assert type(s_) == dict
+    assert sorted(list(s_.iterkeys())) == expected_keys
+    assert type(s_['startup_roles']) == list
+    t_ = s_['startup_roles'][0]
+    e_ = sorted(['confirmed', 'ended_at', 'title', 'created_at', 'startup', 'tagged', 'role', 'started_at', 'id'])
+    assert e_ == sorted(list(t_.iterkeys()))
+
+
   # DEPRECATED
   def test_startup_roles_deprecated(self, id_=2674):
     expected_keys = sorted(['per_page', 'last_page', 'total', 'startup_roles', 'page'])
