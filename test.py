@@ -254,8 +254,10 @@ class AngelListTestCase(unittest.TestCase):
     assert sorted(list(s_.iterkeys())) == expected_keys
     assert type(s_['startup_roles']) == list
     t_ = s_['startup_roles'][0]
-    e_ = sorted(['confirmed', 'ended_at', 'title', 'created_at', 'startup', 'tagged', 'role', 'started_at', 'id'])
-    assert e_ == sorted(list(t_.iterkeys()))
+    e = sorted(['confirmed', 'ended_at', 'title', 'created_at', 'startup', 'tagged', 'role', 'started_at', 'id'])
+    assert e == sorted(list(t_.iterkeys()))
+    # TODO
+    # Other cases
 
 
   # DEPRECATED
@@ -269,9 +271,21 @@ class AngelListTestCase(unittest.TestCase):
       roles_ = r_['startup_roles']
       assert type(roles_) == list
       p_ = roles_[0]
-      e_ = sorted(['confirmed', 'ended_at', 'title', 'created_at', 'startup', 'tagged', 'role', 'started_at', 'id'])
-      assert e_ == sorted(list(p_.iterkeys()))
+      e = sorted(['confirmed', 'ended_at', 'title', 'created_at', 'startup', 'tagged', 'role', 'started_at', 'id'])
+      assert e == sorted(list(p_.iterkeys()))
 
+
+  def test_status_updates(self, startup_id=6702):
+    expected_keys = sorted(['total', 'per_page', 'last_page', 'status_updates', 'page'])
+    u_ = angel.get_status_updates(startup_id)
+    assert type(u_) == dict
+    assert sorted(list(u_.iterkeys())) == expected_keys
+    up_ = u_['status_updates']
+    assert type(up_) == list
+    p_ = up_[0]
+    assert type(p_) == dict
+    e = sorted(['created_at', 'message', 'id'])
+    assert sorted(list(p_.iterkeys())) == e
 
 
 
