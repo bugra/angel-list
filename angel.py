@@ -24,7 +24,7 @@ _STARTUP = '{c_api}/{api}/startups/{id_}?access_token={at}'
 _STARTUP_F = '{c_api}/{api}/startups/{id_}/followers?access_token={at}'
 _STARTUP_S = '{c_api}/{api}/startups/search?access_token={at}&slug={slug}'
 # Updated one => Need to update the url in the function
-_STARTUP_R = '{c_api}/{api}/startups/{id_}/roles?v=1'
+_STARTUP_R = '{c_api}/{api}/startup_roles?v=1'
 _STARTUP_R_DEPRECATED = '{c_api}/{api}/startups/{id_}/roles?direction={direction}?access_token={at}'
 _STARTUP_RAISING = '{c_api}/{api}/startups?filter={filter_}'
 _STARTUP_C = '{c_api}/{api}/startups/{id_}/comments?access_token={at}'
@@ -363,6 +363,29 @@ class AngelList(object):
                                                                                     id_=id_,
                                                                                     direction=direction,
                                                                                     at=self.access_token))
+
+
+  def get_startup_roles(self, user_id=None, startup_id=None, role=None, direction='incoming'):
+    """
+    user_id ->The user role you want to view
+    startup_id -> The startup whose roles you want to view
+    role -> The specific role, you'd like to filter ('founder', 'past investor', 'advisor')
+    direction ->Either incoming or outgoing
+    """
+
+    if user_id is None and startup_id is None and role is None:
+      raise Exception("You need to provide at least one parameter")
+    url = _STARTUP_R.format(c_api=_C_API_BEGINNING,
+                                          api=_API_VERSION)
+    if user_id is not None:
+      url += '&user_id=' + str(user_id)
+    if startup_id is not None:
+      url += '&startup_id=' + str(startup_id)
+      if role is not None:
+        url += '&role=' + role
+      url += '&direction' + direction
+    print(url)
+    return _get_request(url)
 
 
   def get_startup_comments(self, id_):
