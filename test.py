@@ -288,6 +288,57 @@ class AngelListTestCase(unittest.TestCase):
     assert sorted(list(p_.iterkeys())) == e
 
 
+  def test_tags(self, startup_id=1654):
+    expected_keys = sorted(['statistics', 'display_name', 'name', 'angellist_url', 'id', 'tag_type'])
+    t_ = angel.get_tags(startup_id)
+    assert type(t_) == dict
+    assert sorted(list(t_.iterkeys())) == expected_keys
+    assert type(t_['statistics']) == dict
+    assert sorted(list(t_['statistics'].iterkeys())) == sorted(['all', 'direct'])
+
+  def test_tags_children(self, startup_id=1654):
+    expected_keys = sorted(['per_page', 'last_page', 'total', 'children', 'page'])
+    c_ = angel.get_tags_children(startup_id)
+    assert type(c_) == dict
+    assert sorted(list(c_.iterkeys())) == expected_keys
+    assert type(c_['children']) == list
+    assert type(c_['per_page']) == int
+    assert type(c_['last_page']) == int
+    assert type(c_['total']) == int
+    assert type(c_['page']) == int
+
+  def test_tags_parents(self, startup_id=1688):
+    expected_keys = sorted(['per_page', 'last_page', 'total', 'parents', 'page'])
+    c_ = angel.get_tags_parents(startup_id)
+    assert type(c_) == dict
+    assert sorted(list(c_.iterkeys())) == expected_keys
+    assert type(c_['children']) == list
+    assert type(c_['per_page']) == int
+    assert type(c_['last_page']) == int
+    assert type(c_['total']) == int
+    assert type(c_['page']) == int
+
+  def test_tags_startups(self, startup_id=1688):
+    expected_keys = sorted(['per_page', 'last_page', 'total', 'startups', 'page'])
+    c_ = angel.get_tags_startups(startup_id)
+    assert type(c_) == dict
+    assert sorted(list(c_.iterkeys())) == expected_keys
+    assert type(c_['children']) == list
+    assert type(c_['per_page']) == int
+    assert type(c_['last_page']) == int
+    assert type(c_['total']) == int
+    assert type(c_['page']) == int
+
+  def test_tags_users(self, startup_id=1688):
+    expected_keys = sorted(['per_page', 'last_page', 'total', 'users', 'page'])
+    c_ = angel.get_tags_users(startup_id)
+    assert type(c_) == dict
+    assert sorted(list(c_.iterkeys())) == expected_keys
+    assert type(c_['children']) == list
+    assert type(c_['per_page']) == int
+    assert type(c_['last_page']) == int
+    assert type(c_['total']) == int
+    assert type(c_['page']) == int
 
 
 if __name__ == '__main__':
