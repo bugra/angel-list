@@ -34,6 +34,7 @@ _TAGS_STARTUPS = '{c_api}/{api}/tags/{id_}/startups?access_token={at}'
 _TAGS_USERS = '{c_api}/{api}/tags/{id_}/users?access_token={at}'
 _STATUS_U = '{c_api}/{api}/status_updates?startup_id={startup_id}?access_token={at}'
 _REVIEWS_USER = '{c_api}/{api}/reviews?user_id={user_id}?access_token={at}'
+_REVIEW_ID = '{c_api}/{api}/reviews/{id_}?access_token={at}'
 
 _SELF = '{c_api}/{api}/me?access_token={at}'
 _USERS = '{c_api}/{api}/users/{id_}?access_token={at}'
@@ -108,17 +109,20 @@ class AngelList(object):
     # TODO(try to abstract the url(beginning of it))
     #self.url =
 
+
   def get_jobs(self, page=1):
     return _get_request(_JOBS.format(c_api=_C_API_BEGINNING,
                                                      api=_API_VERSION,
                                                       pg=page,
                                                       at=self.access_token))
 
+
   def get_job_by_id(self, id_):
     return _get_request(_JOBS_ID.format(c_api=_C_API_BEGINNING,
                                                 api=_API_VERSION,
                                                 id_=id_,
                                                 at=self.access_token))
+
 
   def get_startup_jobs(self, id_):
     return _get_request(_STARTUP_ID_JOBS.format(c_api=_C_API_BEGINNING,
@@ -144,6 +148,7 @@ class AngelList(object):
                                             api=_API_VERSION,
                                             at=self.access_token))
 
+
   def get_likes(self, likable_type, likable_id):
     """
     likable_type: 'Comment', 'Press', 'Review', 'StartupRole', 'StatusUpdate'
@@ -155,8 +160,10 @@ class AngelList(object):
                                               li=likable_id,
                                               at=self.access_token))
 
+
   def post_likes(self, likable_type, likable_id):
     raise NotImplementedError()
+
 
   def delete_likes(self, id_):
     raise NotImplementedError()
@@ -221,6 +228,7 @@ class AngelList(object):
                                                     api=_API_VERSION,
                                                     at=self.access_token))
 
+
   # TODO
   # requires scope "invest" ?
   def get_reservations(self):
@@ -231,12 +239,14 @@ class AngelList(object):
     except (RuntimeError, TypeError, NameError):
       raise NotImplementedError()
 
+
   # TODO
   # requires scope "invest"?
   def get_reservations_of_startup(self, id_):
     return _get_request(_RESERVATIONS_ID.format(c_api=_C_API_BEGINNING,
                                                         api=_API_VERSION,
                                                         at=self.access_token))
+
   # TODO
   def get_accrediation(self):
     try:
@@ -259,6 +269,7 @@ class AngelList(object):
                                               id_=id_,
                                               api=_API_VERSION,
                                               at=self.access_token))
+
 
   def get_users_batch(self, ids):
     """
@@ -345,6 +356,7 @@ class AngelList(object):
                                                api=_API_VERSION,
                                                id_=id_,
                                                at=self.access_token))
+
   # Tags
   def get_tags(self, id_):
     return _get_request(_TAGS.format(c_api=_C_API_BEGINNING,
@@ -358,6 +370,7 @@ class AngelList(object):
                                                                       api=_API_VERSION,
                                                                       id_=id_,
                                                                       at=self.access_token))
+
 
   def get_tags_parents(self, id_):
     return _get_request(_TAGS_PARENTS.format(c_api=_C_API_BEGINNING,
@@ -458,6 +471,7 @@ class AngelList(object):
       search_url + _TYPE_SUFFIX.format(type_=type_)
     return _get_request(search_url)
 
+
   # Reviews Section
   def get_reviews(self, user_id):
     url = _REVIEWS_USER.format(c_api=_C_API_BEGINNING,
@@ -466,7 +480,13 @@ class AngelList(object):
                                                 at=self.access_token)
     return _get_request(url)
 
-    # TODO Review Id
+
+  def get_review_id(self, id_):
+    return _get_request(_REVIEW_ID.format(c_api=_C_API_BEGINNING,
+                                                              api=_API_VERSION,
+                                                              id_=id_,
+                                                              at=self.access_token))
+
 
 if __name__ == '__main__':
   import config
