@@ -88,12 +88,9 @@ class AngelListTestCase(unittest.TestCase):
     ids = list(map(lambda k: str(k), range(n)))
     batch_ = angel.get_users_batch(ids)
     assert len(batch_) <= n
-    keys = ['facebook_url', 'bio', 'name', 'roles', 'github_url',
-            'angellist_url', 'image', 'linkedin_url', 'locations', 'skills',
-            'twitter_url', 'what_ive_built', 'dribbble_url', 'behance_url',\
-            'blog_url', 'aboutme_url', 'follower_count', 'online_bio_url',
-            'investor', 'id']
+    keys = [u'dribbble_url', u'image', u'locations', u'id', u'angellist_url', u'what_ive_built', u'what_i_do', u'follower_count', u'bio', u'online_bio_url', u'twitter_url', u'facebook_url', u'criteria', u'aboutme_url', u'investor', u'name', u'roles', u'skills', u'linkedin_url', u'github_url', u'behance_url', u'blog_url']
     if batch_ and len(batch_) > 0:
+      print(batch_[0].keys())
       assert sorted(list(batch_[0].iterkeys())) == sorted(keys)
 
 
@@ -245,6 +242,7 @@ class AngelListTestCase(unittest.TestCase):
                                           'created_at', 'blog_url'])
     assert sorted(list(i_.iterkeys())) == expected_keys
 
+
   def test_startup_roles(self):
     # Only Startup id
     startup_id = 6702
@@ -288,8 +286,6 @@ class AngelListTestCase(unittest.TestCase):
     assert e == sorted(list(t_.iterkeys()))
 
 
-
-  # DEPRECATED
   def test_startup_roles_deprecated(self, id_=2674):
     expected_keys = sorted(['per_page', 'last_page', 'total', 'startup_roles', 'page'])
     directions = ['incoming', 'outgoing']
@@ -325,6 +321,7 @@ class AngelListTestCase(unittest.TestCase):
     assert type(t_['statistics']) == dict
     assert sorted(list(t_['statistics'].iterkeys())) == sorted(['all', 'direct'])
 
+
   def test_tags_children(self, startup_id=1654):
     expected_keys = sorted(['per_page', 'last_page', 'total', 'children', 'page'])
     c_ = angel.get_tags_children(startup_id)
@@ -335,6 +332,7 @@ class AngelListTestCase(unittest.TestCase):
     assert type(c_['last_page']) == int
     assert type(c_['total']) == int
     assert type(c_['page']) == int
+
 
   def test_tags_parents(self, startup_id=1688):
     expected_keys = sorted(['per_page', 'last_page', 'total', 'parents', 'page'])
@@ -347,6 +345,7 @@ class AngelListTestCase(unittest.TestCase):
     assert type(c_['total']) == int
     assert type(c_['page']) == int
 
+
   def test_tags_startups(self, startup_id=1688):
     expected_keys = sorted(['per_page', 'last_page', 'total', 'startups', 'page'])
     c_ = angel.get_tags_startups(startup_id)
@@ -357,6 +356,7 @@ class AngelListTestCase(unittest.TestCase):
     assert type(c_['last_page']) == int
     assert type(c_['total']) == int
     assert type(c_['page']) == int
+
 
   def test_tags_users(self, startup_id=1688):
     expected_keys = sorted(['per_page', 'last_page', 'total', 'users', 'page'])
@@ -369,6 +369,7 @@ class AngelListTestCase(unittest.TestCase):
     assert type(c_['total']) == int
     assert type(c_['page']) == int
 
+
   def test_reviews(self, user_id=155):
     r_ = angel.get_reviews(user_id)
     expected_keys = sorted(['reviews', 'last_page', 'per_page', 'total', 'page', 'total_positive'])
@@ -377,6 +378,18 @@ class AngelListTestCase(unittest.TestCase):
     assert type(reviews_) == list
     e = sorted(['relationship_to_reviewer', 'rating', 'created_at', 'note', 'reviewer', 'id'])
     assert sorted(list(reviews_[0].iterkeys())) == e
+
+
+  def test_review_id(self, id_=1098):
+    r_id_ = angel.get_review_id(id_)
+    expected_keys = sorted(['relationship_to_reviewer', 'rating', 'created_at', 'note', 'reviewer', 'id'])
+    assert type(r_id_ ) == dict
+    assert sorted(list(r_id_.iterkeys())) == expected_keys
+    assert type(r_id_['created_at']) == unicode
+    assert type(r_id_['id']) == int
+    assert type(r_id_['note']) == unicode
+    assert type(r_id_['rating']) == int
+    assert type(r_id_['relationship_to_reviewer']) == dict
 
 
 if __name__ == '__main__':
