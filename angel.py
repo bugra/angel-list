@@ -23,7 +23,6 @@ _FEEDS = '{c_api}/{api}/feed?access_token{at}'
 _STARTUP = '{c_api}/{api}/startups/{id_}?access_token={at}'
 _STARTUP_F = '{c_api}/{api}/startups/{id_}/followers?access_token={at}'
 _STARTUP_S = '{c_api}/{api}/startups/search?access_token={at}&slug={slug}'
-# Updated one => Need to update the url in the function
 _STARTUP_R = '{c_api}/{api}/startup_roles?v=1'
 _STARTUP_R_DEPRECATED = '{c_api}/{api}/startups/{id_}/roles?direction={direction}?access_token={at}'
 _STARTUP_RAISING = '{c_api}/{api}/startups?filter={filter_}'
@@ -33,8 +32,8 @@ _TAGS_CHILDREN = '{c_api}/{api}/tags/{id_}/children?access_token={at}'
 _TAGS_PARENTS = '{c_api}/{api}/tags/{id_}/parents?access_token={at}'
 _TAGS_STARTUPS = '{c_api}/{api}/tags/{id_}/startups?access_token={at}'
 _TAGS_USERS = '{c_api}/{api}/tags/{id_}/users?access_token={at}'
-
 _STATUS_U = '{c_api}/{api}/status_updates?startup_id={startup_id}?access_token={at}'
+_REVIEWS_USER = '{c_api}/{api}/reviews?user_id={user_id}?access_token={at}'
 
 _SELF = '{c_api}/{api}/me?access_token={at}'
 _USERS = '{c_api}/{api}/users/{id_}?access_token={at}'
@@ -106,14 +105,14 @@ class AngelList(object):
     self.client_id = client_id
     self.client_secret = client_secret
     self.access_token = access_token
-    # TODO
+    # TODO(try to abstract the url(beginning of it))
     #self.url =
 
   def get_jobs(self, page=1):
     return _get_request(_JOBS.format(c_api=_C_API_BEGINNING,
-                                             api=_API_VERSION,
-                                             pg=page,
-                                             at=self.access_token))
+                                                     api=_API_VERSION,
+                                                      pg=page,
+                                                      at=self.access_token))
 
   def get_job_by_id(self, id_):
     return _get_request(_JOBS_ID.format(c_api=_C_API_BEGINNING,
@@ -459,6 +458,15 @@ class AngelList(object):
       search_url + _TYPE_SUFFIX.format(type_=type_)
     return _get_request(search_url)
 
+  # Reviews Section
+  def get_reviews(self, user_id):
+    url = _REVIEWS_USER.format(c_api=_C_API_BEGINNING,
+                                                api=_API_VERSION,
+                                                user_id=user_id,
+                                                at=self.access_token)
+    return _get_request(url)
+
+    # TODO Review Id
 
 if __name__ == '__main__':
   import config
