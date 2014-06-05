@@ -256,8 +256,37 @@ class AngelListTestCase(unittest.TestCase):
     t_ = s_['startup_roles'][0]
     e = sorted(['confirmed', 'ended_at', 'title', 'created_at', 'startup', 'tagged', 'role', 'started_at', 'id'])
     assert e == sorted(list(t_.iterkeys()))
-    # TODO
-    # Other cases
+    # Direction Test
+    direction = 'outgoing'
+    s_ = angel.get_startup_roles(startup_id=startup_id, direction=direction)
+    assert type(s_) == dict
+    assert sorted(list(s_.iterkeys())) == expected_keys
+    assert type(s_['startup_roles']) == list
+    t_ = s_['startup_roles'][0]
+    assert e == sorted(list(t_.iterkeys()))
+
+    # Roles Test
+    s_ = angel.get_startup_roles(startup_id=startup_id, role='founder')
+    assert type(s_) == dict
+    assert sorted(list(s_.iterkeys())) == expected_keys
+    assert type(s_['startup_roles']) == list
+    t_ = s_['startup_roles'][0]
+    assert e == sorted(list(t_.iterkeys()))
+    s_ = angel.get_startup_roles(startup_id=startup_id, role='advisor')
+    assert type(s_) == dict
+    assert sorted(list(s_.iterkeys())) == expected_keys
+    assert type(s_['startup_roles']) == list
+    t_ = s_['startup_roles'][0]
+    assert e == sorted(list(t_.iterkeys()))
+
+    # User id test
+    s_ = angel.get_startup_roles(user_id=2)
+    assert type(s_) == dict
+    assert sorted(list(s_.iterkeys())) == expected_keys
+    assert type(s_['startup_roles']) == list
+    t_ = s_['startup_roles'][0]
+    assert e == sorted(list(t_.iterkeys()))
+
 
 
   # DEPRECATED
@@ -312,7 +341,7 @@ class AngelListTestCase(unittest.TestCase):
     c_ = angel.get_tags_parents(startup_id)
     assert type(c_) == dict
     assert sorted(list(c_.iterkeys())) == expected_keys
-    assert type(c_['children']) == list
+    assert type(c_['parents']) == list
     assert type(c_['per_page']) == int
     assert type(c_['last_page']) == int
     assert type(c_['total']) == int
@@ -323,7 +352,7 @@ class AngelListTestCase(unittest.TestCase):
     c_ = angel.get_tags_startups(startup_id)
     assert type(c_) == dict
     assert sorted(list(c_.iterkeys())) == expected_keys
-    assert type(c_['children']) == list
+    assert type(c_['startups']) == list
     assert type(c_['per_page']) == int
     assert type(c_['last_page']) == int
     assert type(c_['total']) == int
@@ -334,7 +363,7 @@ class AngelListTestCase(unittest.TestCase):
     c_ = angel.get_tags_users(startup_id)
     assert type(c_) == dict
     assert sorted(list(c_.iterkeys())) == expected_keys
-    assert type(c_['children']) == list
+    assert type(c_['users']) == list
     assert type(c_['per_page']) == int
     assert type(c_['last_page']) == int
     assert type(c_['total']) == int
