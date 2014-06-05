@@ -369,6 +369,15 @@ class AngelListTestCase(unittest.TestCase):
     assert type(c_['total']) == int
     assert type(c_['page']) == int
 
+  def test_reviews(self, user_id=155):
+    r_ = angel.get_reviews(user_id)
+    expected_keys = sorted(['reviews', 'last_page', 'per_page', 'total', 'page', 'total_positive'])
+    assert type(r_) == dict
+    reviews_ = r_['reviews']
+    assert type(reviews_) == list
+    e = sorted(['relationship_to_reviewer', 'rating', 'created_at', 'note', 'reviewer', 'id'])
+    assert sorted(list(reviews_[0].iterkeys())) == e
+
 
 if __name__ == '__main__':
   unittest.main()
