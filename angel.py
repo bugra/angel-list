@@ -405,7 +405,7 @@ class AngelList(object):
     direction ->Either incoming or outgoing
     """
 
-    if user_id is None and startup_id is None and role is None:
+    if user_id is None and startup_id is None:
       raise Exception("You need to provide at least one parameter")
     url = _STARTUP_R.format(c_api=_C_API_BEGINNING,
                                           api=_API_VERSION)
@@ -413,9 +413,9 @@ class AngelList(object):
       url += '&user_id=' + str(user_id)
     if startup_id is not None:
       url += '&startup_id=' + str(startup_id)
-      if role is not None:
-        url += '&role=' + role
-      url += '&direction' + direction
+    if role is not None:
+      url += '&role=' + role
+    url += '&direction' + direction
     return _get_request(url)
 
 
