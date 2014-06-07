@@ -6,9 +6,9 @@ import hashlib
 _API_VERSION = 1
 
 _POST_HEADER = {
-               "Content-type": "application/x-www-form-urlencoded",
-               "Accept": "text/plain"
-              }
+                            "Content-type": "application/x-www-form-urlencoded",
+                            "Accept": "text/plain"
+                           }
 
 _DELETE_HEADER = ['Content-Type', 'text/plain']
 
@@ -35,6 +35,9 @@ _TAGS_USERS = '{c_api}/{api}/tags/{id_}/users?access_token={at}'
 _STATUS_U = '{c_api}/{api}/status_updates?startup_id={startup_id}?access_token={at}'
 _REVIEWS_USER = '{c_api}/{api}/reviews?user_id={user_id}?access_token={at}'
 _REVIEW_ID = '{c_api}/{api}/reviews/{id_}?access_token={at}'
+
+_FOLLOWS_R = '{c_api}/{api}/follows/relationship?source_id={s}&target_type={t}&target_id={t_id}?access_token={at}'
+_FOLLOWS_B = '{c_api}/{api}/follows/batch?ids={batch_ids}'
 
 _SELF = '{c_api}/{api}/me?access_token={at}'
 _USERS = '{c_api}/{api}/users/{id_}?access_token={at}'
@@ -249,6 +252,7 @@ class AngelList(object):
                                                         api=_API_VERSION,
                                                         at=self.access_token))
 
+
   # TODO
   def get_accrediation(self):
     try:
@@ -263,7 +267,6 @@ class AngelList(object):
 
   def post_intros(self, id_, note=None):
     raise NotImplementedError()
-
 
 
   def get_users(self, id_):
@@ -346,6 +349,21 @@ class AngelList(object):
                                                  at=self.access_token))
 
 
+  def get_follows_relationship(self, source_id, target_type, target_id):
+    return _get_request(_FOLLOWS_R.format(c_api=_C_API_BEGINNING,
+                                                                api=_API_VERSION,
+                                                                s=source_id,
+                                                                t=target_type,
+                                                                t_id=target_id,
+                                                                at=self.access_token))
+
+
+  def get_follows_batch(self, batch_ids):
+    return _get_request(_FOLLOWS_B.format(c_api=_C_API_BEGINNING,
+                                                               api=_API_VERSION,
+                                                               batch_ids=','.join(batch_ids)))
+
+
   def get_startup_followers(self, id_):
     return _get_request(_STARTUP_F.format(c_api=_C_API_BEGINNING,
                                                   api=_API_VERSION,
@@ -358,6 +376,7 @@ class AngelList(object):
                                                api=_API_VERSION,
                                                id_=id_,
                                                at=self.access_token))
+
 
   # Tags
   def get_tags(self, id_):
