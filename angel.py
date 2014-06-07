@@ -387,6 +387,8 @@ class AngelList(object):
 
 
   def get_tags_users(self, id_):
+    """ Get a particular user which are tagged based on the id_
+    """
     return _get_request(_TAGS_USERS.format(c_api=_C_API_BEGINNING,
                                                                       api=_API_VERSION,
                                                                       id_=id_,
@@ -395,6 +397,8 @@ class AngelList(object):
 
   # STARTUP Section
   def get_startup(self, id_):
+    """ Get startup based on id
+    """
     return _get_request(_STARTUP.format(c_api=_C_API_BEGINNING,
                                         api=_API_VERSION,
                                         id_=id_,
@@ -402,6 +406,9 @@ class AngelList(object):
 
 
   def get_startup_roles_deprecated(self, id_, direction='incoming'):
+    """ Startup roles
+        Will be deprecated for the next version(2.x) api
+    """
     return _get_request(_STARTUP_R_DEPRECATED.format(c_api=_C_API_BEGINNING,
                                                                                     api=_API_VERSION,
                                                                                     id_=id_,
@@ -432,6 +439,8 @@ class AngelList(object):
 
 
   def get_startup_comments(self, id_):
+    """ Retrieve the comments of a particular startup
+    """
     return _get_request(_STARTUP_C.format(c_api=_C_API_BEGINNING,
                                                                api=_API_VERSION,
                                                                id_=id_,
@@ -439,6 +448,8 @@ class AngelList(object):
 
 
   def get_startups_filtered_by(self, filter_='raising'):
+    """ Get startups based on which companies are raising funding
+    """
     url = _STARTUP_RAISING.format(c_api=_C_API_BEGINNING,
                                                                          api=_API_VERSION,
                                                                          filter_=filter_)
@@ -447,6 +458,8 @@ class AngelList(object):
 
   # Status Updates
   def get_status_updates(self, startup_id):
+    """ Get status updates of a startup
+    """
     return _get_request(_STATUS_U.format(c_api=_C_API_BEGINNING,
                                                              api=_API_VERSION,
                                                              startup_id=startup_id,
@@ -455,6 +468,8 @@ class AngelList(object):
 
   # SEARCH Section
   def get_search_for_slugs(self, slug):
+    """ Search for a particular slug
+    """
     return _get_request(_SLUG_SEARCH.format(c_api=_C_API_BEGINNING,
                                             api=_API_VERSION,
                                             slug=_format_query(slug)))
@@ -474,6 +489,8 @@ class AngelList(object):
 
   # Reviews Section
   def get_reviews(self, user_id):
+    """ Get reviews for a particular user
+    """
     url = _REVIEWS_USER.format(c_api=_C_API_BEGINNING,
                                                 api=_API_VERSION,
                                                 user_id=user_id,
@@ -482,6 +499,9 @@ class AngelList(object):
 
 
   def get_review_id(self, id_):
+    """ Get a particular review id, independent from the user_id and
+    startup_id
+    """
     return _get_request(_REVIEW_ID.format(c_api=_C_API_BEGINNING,
                                                               api=_API_VERSION,
                                                               id_=id_,
