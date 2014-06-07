@@ -90,7 +90,6 @@ class AngelListTestCase(unittest.TestCase):
     self.assertTrue(len(batch_) <= n)
     keys = [u'dribbble_url', u'image', u'locations', u'id', u'angellist_url', u'what_ive_built', u'what_i_do', u'follower_count', u'bio', u'online_bio_url', u'twitter_url', u'facebook_url', u'criteria', u'aboutme_url', u'investor', u'name', u'roles', u'skills', u'linkedin_url', u'github_url', u'behance_url', u'blog_url']
     if batch_ and len(batch_) > 0:
-      print(batch_[0].keys())
       self.assertEqual(sorted(list(batch_[0].iterkeys())), sorted(keys))
 
 
@@ -454,6 +453,24 @@ class AngelListTestCase(unittest.TestCase):
     self.assertEqual(type(d_['id']), int)
     self.assertEqual(type(d_['user']), dict)
 
+
+  def test_follows_relationship(self):
+    r_ = angel.get_follows_relationship(671, 'User', 2)
+    expected_keys = ['source', 'target']
+    self.assertEqual(expected_keys, sorted(list(r_.iterkeys())))
+    e = ['created_at', 'id']
+    self.assertEqual(e, sorted(list(r_['source'].iterkeys())))
+    self.assertEqual(type(r_['source']['created_at']), unicode)
+    self.assertEqual(type(r_['source']['id']), int)
+
+
+  def test_follows_batch(self):
+    batch_ids = ['86500', '173917']
+    b_ = angel.get_follows_batch(batch_ids)
+    self.assertEqual(type(b_), list)
+    self.assertEqual(type(b_[0]), dict)
+    expected_keys = sorted(['created_at', 'followed', 'id', 'follower'])
+    self.assertEqual(expected_keys, sorted(list(b_[0].iterkeys())))
 
 
 if __name__ == '__main__':
