@@ -71,10 +71,12 @@ _DELETE_METHOD = lambda _: 'DELETE'
 Util Functions
 """
 
+
 def _format_query(query):
   if len(query.split()) > 1:
     query = '+'.join(query.split())
   return query
+
 
 def _enc_data(data):
   return urllib.urlencode(data)
