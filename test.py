@@ -391,6 +391,21 @@ class AngelListTestCase(unittest.TestCase):
     assert type(r_id_['rating']) == int
     assert type(r_id_['relationship_to_reviewer']) == dict
 
+  def test_feeds(self):
+    f_ = angel.get_feeds()
+    expected_keys = sorted(['feed', 'per_page', 'last_page', 'total', 'page'])
+    self.assertEqual(sorted(list(f_.iterkeys())), expected_keys)
+    f_elem = f_['feed'][0]
+    e_ = sorted(['description', 'extra', 'timestamp', 'comments', 'actor', 'item', 'likes', 'text', 'promoted_by', 'id', 'target'])
+    self.assertEqual(e_, sorted(list(f_elem.iterkeys())))
+    self.assertEqual(type(f_elem['description']), unicode)
+    self.assertEqual(type(f_elem['timestamp']), unicode)
+    self.assertEqual(type(f_elem['id']), unicode)
+    self.assertEqual(type(f_elem['comments']), int)
+    self.assertEqual(type(f_elem['likes']), int)
+    self.assertEqual(type(f_elem['actor']), dict)
+    self.assertEqual(type(f_elem['item']), dict)
+
 
 if __name__ == '__main__':
   unittest.main()
