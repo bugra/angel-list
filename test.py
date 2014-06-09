@@ -473,5 +473,23 @@ class AngelListTestCase(unittest.TestCase):
     self.assertEqual(expected_keys, sorted(list(b_[0].iterkeys())))
 
 
+  def test_paths(self):
+    direction = 'following'
+    user_ids = [2, 155]
+    p_ = angel.get_paths(user_ids=user_ids, direction=direction)
+    expected_keys = sorted([u'2', u'155'])
+    self.assertEqual(expected_keys, sorted(list(p_.iterkeys())))
+    self.assertEqual(type(p_['2']), list)
+    pp_ = p_['2'][0]
+    self.assertEqual(type(pp_), list)
+    c_ = pp_[0]
+    e = sorted([u'connector', u'connection'])
+    self.assertEqual(e, sorted(list(c_.iterkeys())))
+    ee = sorted(['angellist_url', 'image', 'type', 'id', 'name'])
+    self.assertEqual(ee, sorted(list(c_['connector'])))
+    eee = sorted(['out', 'via', 'type', 'in'])
+    self.assertEqual(eee, sorted(list(c_['connection'])))
+
+
 if __name__ == '__main__':
   unittest.main()
