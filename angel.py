@@ -19,6 +19,9 @@ _FOLLOWERS = '{c_api}/{api}/users/{id_}/followers?access_token={at}'
 _FOLLOWER_IDS = '{c_api}/{api}/users/{id_}/followers/ids?access_token={at}'
 _FOLLOWING = '{c_api}/{api}/users/{id_}/following?access_token={at}'
 _FOLLOWING_IDS = '{c_api}/{api}/users/{id_}/following/ids?access_token={at}'
+_FOLLOWS_R = '{c_api}/{api}/follows/relationship?source_id={s}&target_type={t}&target_id={t_id}?access_token={at}'
+_FOLLOWS_B = '{c_api}/{api}/follows/batch?ids={batch_ids}'
+
 _FEEDS = '{c_api}/{api}/feed?access_token{at}'
 _STARTUP = '{c_api}/{api}/startups/{id_}?access_token={at}'
 _STARTUP_F = '{c_api}/{api}/startups/{id_}/followers?access_token={at}'
@@ -35,9 +38,6 @@ _TAGS_USERS = '{c_api}/{api}/tags/{id_}/users?access_token={at}'
 _STATUS_U = '{c_api}/{api}/status_updates?startup_id={startup_id}?access_token={at}'
 _REVIEWS_USER = '{c_api}/{api}/reviews?user_id={user_id}?access_token={at}'
 _REVIEW_ID = '{c_api}/{api}/reviews/{id_}?access_token={at}'
-
-_FOLLOWS_R = '{c_api}/{api}/follows/relationship?source_id={s}&target_type={t}&target_id={t_id}?access_token={at}'
-_FOLLOWS_B = '{c_api}/{api}/follows/batch?ids={batch_ids}'
 
 _SELF = '{c_api}/{api}/me?access_token={at}'
 _USERS = '{c_api}/{api}/users/{id_}?access_token={at}'
@@ -201,6 +201,8 @@ class AngelList(object):
     startup_ids: paths between you and these startups
     direction: 'following' or 'followed'
     """
+    if user_ids is None and startup_ids is None and direction is None:
+      raise Exception('At least one input argument should be different than None')
     if isinstance(user_ids, list):
       user_ids = ','.join(list(map(lambda k: str(k), user_ids)))
     if isinstance(startup_ids, list):
@@ -216,7 +218,6 @@ class AngelList(object):
                                                     startup_ids=startup_ids)
     if not direction is None:
       paths_url += '&' + _DIRECTION_SUFFIX.format(direction=direction)
-    print paths_url
     return _get_request(paths_url)
 
 
