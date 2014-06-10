@@ -41,8 +41,9 @@ _REVIEW_ID = '{c_api}/{api}/reviews/{id_}?access_token={at}'
 
 _SELF = '{c_api}/{api}/me?access_token={at}'
 _USERS = '{c_api}/{api}/users/{id_}?access_token={at}'
+_USERS_R = '{c_api}/{api}/users/{id_}/roles?access_token={at}'
 _USERS_S = '{c_api}/{api}/users/search?access_token={at}'
-_USERS_BATCH = '{c_api}/{api}/users/batch?ids={ids}'
+_USERS_BATCH = '{c_api}/{api}/users/batch?ids={ids}?access_token={at}'
 _S_SEARCH = '{c_api}/{api}/search?query={query}'
 _SLUG_SEARCH = '{c_api}/{api}/search/slugs?query={slug}'
 _COM = '{c_api}/{api}/comments?commentable_type={ct}&commentable_id={id_}'
@@ -94,7 +95,6 @@ def _post_request(url, post_data):
                                                  _enc_data(post_data),
                                                  _POST_HEADER)))
 
-
 def _del_request(url, del_data):
   del_params = _enc_data(del_data)
   request = urllib2.Request(url, del_params)
@@ -102,7 +102,6 @@ def _del_request(url, del_data):
   request.add_header(*_DELETE_HEADER)
   return json.loads(urrlib2.build_opener(urllib2.HTTPHandler).open(
                                                                 request).read())
-
 
 class AngelList(object):
 
@@ -114,13 +113,11 @@ class AngelList(object):
     # TODO(try to abstract the url(beginning of it))
     #self.url =
 
-
   def get_jobs(self, page=1):
     return _get_request(_JOBS.format(c_api=_C_API_BEGINNING,
                                                      api=_API_VERSION,
                                                       pg=page,
                                                       at=self.access_token))
-
 
   def get_job_by_id(self, id_):
     return _get_request(_JOBS_ID.format(c_api=_C_API_BEGINNING,
@@ -128,20 +125,17 @@ class AngelList(object):
                                                 id_=id_,
                                                 at=self.access_token))
 
-
   def get_startup_jobs(self, id_):
     return _get_request(_STARTUP_ID_JOBS.format(c_api=_C_API_BEGINNING,
                                                         api=_API_VERSION,
                                                         id_=id_,
                                                         at=self.access_token))
 
-
   def get_tag_jobs(self, id_):
     return _get_request(_TAG_ID_JOBS.format(c_api=_C_API_BEGINNING,
                                                     api=_API_VERSION,
                                                     id_=id_,
                                                     at=self.access_token))
-
 
   def get_comments(self, commentable_type, id_):
     """
@@ -152,7 +146,6 @@ class AngelList(object):
                                             id_=id_,
                                             api=_API_VERSION,
                                             at=self.access_token))
-
 
   def get_likes(self, likable_type, likable_id):
     """
@@ -165,20 +158,16 @@ class AngelList(object):
                                               li=likable_id,
                                               at=self.access_token))
 
-
   def post_likes(self, likable_type, likable_id):
     raise NotImplementedError()
 
-
   def delete_likes(self, id_):
     raise NotImplementedError()
-
 
   def get_messages(self):
     return _get_request(_MESSAGES.format(c_api=_C_API_BEGINNING,
                                                  api=_API_VERSION,
                                                  at=self.access_token))
-
 
   def get_messages_by_thread_id(self, id_):
     return _get_request(_MESSAGES_THREAD.format(c_api=_C_API_BEGINNING,
@@ -186,14 +175,11 @@ class AngelList(object):
                                                         id_=id_,
                                                         at=self.access_token))
 
-
   def post_messages(self, thread_id, recipient_id, body):
     raise NotImplementedError()
 
-
   def post_messages_mark(self, thread_ids):
     raise NotImplementedError()
-
 
   def get_paths(self, user_ids=None, startup_ids=None, direction=None):
     """
@@ -220,20 +206,17 @@ class AngelList(object):
       paths_url += '&' + _DIRECTION_SUFFIX.format(direction=direction)
     return _get_request(paths_url)
 
-
   def get_press(self, startup_id):
     return _get_request(_PRESS.format(c_api=_C_API_BEGINNING,
                                               id_=startup_id,
                                               api=_API_VERSION,
                                               at=self.access_token))
 
-
   def get_press_by_id(self, press_id):
     return _get_request(_PRESS_BY_ID.format(c_api=_C_API_BEGINNING,
                                                     id_=press_id,
                                                     api=_API_VERSION,
                                                     at=self.access_token))
-
 
   # TODO
   # requires scope "invest" ?
@@ -245,14 +228,12 @@ class AngelList(object):
     except (RuntimeError, TypeError, NameError):
       raise NotImplementedError()
 
-
   # TODO
   # requires scope "invest"?
   def get_reservations_of_startup(self, id_):
     return _get_request(_RESERVATIONS_ID.format(c_api=_C_API_BEGINNING,
                                                         api=_API_VERSION,
                                                         at=self.access_token))
-
 
   # TODO
   def get_accrediation(self):
@@ -265,17 +246,26 @@ class AngelList(object):
     except (RuntimeError, TypeError, NameError):
       raise NotImplementedError()
 
-
   def post_intros(self, id_, note=None):
     raise NotImplementedError()
 
-
-  def get_users(self, id_):
+  def get_user(self, id_):
     return _get_request(_USERS.format(c_api=_C_API_BEGINNING,
                                               id_=id_,
                                               api=_API_VERSION,
                                               at=self.access_token))
 
+  def get_user_roles(self, id_):
+    return _get_request(_USERS_R.format(c_api=_C_API_BEGINNING,
+                                                           id_=id_,
+                                                           api=_API_VERSION,
+                                                           at=self.access_token))
+
+  def get_user_batch(self, ids):
+    return _get_request(_USERS_B.format(c_api=_C_API_BEGINNING,
+                                                           ids=','.join((ids),
+                                                            api=_API_VERSION,
+                                                            at=self.access_token)))
 
   def get_users_batch(self, ids):
     """
@@ -285,10 +275,10 @@ class AngelList(object):
     assert len(ids) <= 50
     ids_ = ','.join(ids)
     url = _USERS_BATCH.format(c_api=_C_API_BEGINNING,
-                                            api=_API_VERSION,
-                                            ids=ids_)
+                                              api=_API_VERSION,
+                                              ids=ids_,
+                                              at=self.access_token)
     return _get_request(url)
-
 
   # TODO
   # Not working
@@ -300,12 +290,10 @@ class AngelList(object):
       request_url += _MD5.format(md5=hashlib.md5(email).hexdigest())
     return _get_request(request_url)
 
-
   def get_self(self):
     return _get_request(_SELF.format(c_api=_C_API_BEGINNING,
                                              api=_API_VERSION,
                                              at=self.access_token))
-
 
   def get_feeds(self, personalized=False, since=None):
     """
@@ -321,13 +309,11 @@ class AngelList(object):
       feeds_url += _SINCE_SUFFIX.format(since=since)
     return _get_request(feeds_url)
 
-
   def get_followers(self, id_):
     return _get_request(_FOLLOWERS.format(c_api=_C_API_BEGINNING,
                                                   api=_API_VERSION,
                                                   id_=id_,
                                                   at=self.access_token))
-
 
   def get_followers_ids(self, id_):
     return _get_request(F_IDS_TEMPLATE.format(c_api=_C_API_BEGINNING,
@@ -335,20 +321,17 @@ class AngelList(object):
                                               id_=id_,
                                               at=self.access_token))
 
-
   def get_following(self, id_):
     return _get_request(_FOLLOWING.format(c_api=_C_API_BEGINNING,
                                                   api=_API_VERSION,
                                                   id_=id_,
                                                   at=self.access_token))
 
-
   def get_following_ids(self, id_):
     return _get_request(_FOLLOWING_IDS.format(c_api=_C_API_BEGINNING,
                                                  api=_API_VERSION,
                                                  id_=id_,
                                                  at=self.access_token))
-
 
   def get_follows_relationship(self, source_id, target_type, target_id):
     return _get_request(_FOLLOWS_R.format(c_api=_C_API_BEGINNING,
@@ -358,12 +341,10 @@ class AngelList(object):
                                                                 t_id=target_id,
                                                                 at=self.access_token))
 
-
   def get_follows_batch(self, batch_ids):
     return _get_request(_FOLLOWS_B.format(c_api=_C_API_BEGINNING,
                                                                api=_API_VERSION,
                                                                batch_ids=','.join(batch_ids)))
-
 
   def get_startup_followers(self, id_):
     return _get_request(_STARTUP_F.format(c_api=_C_API_BEGINNING,
@@ -371,13 +352,11 @@ class AngelList(object):
                                                   id_=id_,
                                                   at=self.access_token))
 
-
   def get_startup_followers_ids(self, id_):
     return _get_request(S__FOLLOWER_IDS.format(c_api=_C_API_BEGINNING,
                                                api=_API_VERSION,
                                                id_=id_,
                                                at=self.access_token))
-
 
   # Tags
   def get_tags(self, id_):
@@ -386,13 +365,11 @@ class AngelList(object):
                                        id_=id_,
                                        at=self.access_token))
 
-
   def get_tags_children(self, id_):
     return _get_request(_TAGS_CHILDREN.format(c_api=_C_API_BEGINNING,
                                                                       api=_API_VERSION,
                                                                       id_=id_,
                                                                       at=self.access_token))
-
 
   def get_tags_parents(self, id_):
     return _get_request(_TAGS_PARENTS.format(c_api=_C_API_BEGINNING,
@@ -400,13 +377,11 @@ class AngelList(object):
                                                                       id_=id_,
                                                                       at=self.access_token))
 
-
   def get_tags_startups(self, id_):
     return _get_request(_TAGS_STARTUPS.format(c_api=_C_API_BEGINNING,
                                                                       api=_API_VERSION,
                                                                       id_=id_,
                                                                       at=self.access_token))
-
 
   def get_tags_users(self, id_):
     """ Get a particular user which are tagged based on the id_
@@ -415,7 +390,6 @@ class AngelList(object):
                                                                       api=_API_VERSION,
                                                                       id_=id_,
                                                                       at=self.access_token))
-
 
   # STARTUP Section
   def get_startup(self, id_):
@@ -426,7 +400,6 @@ class AngelList(object):
                                         id_=id_,
                                         at=self.access_token))
 
-
   def get_startup_roles_deprecated(self, id_, direction='incoming'):
     """ Startup roles
         Will be deprecated for the next version(2.x) api
@@ -436,7 +409,6 @@ class AngelList(object):
                                                                                     id_=id_,
                                                                                     direction=direction,
                                                                                     at=self.access_token))
-
 
   def get_startup_roles(self, user_id=None, startup_id=None, role=None, direction='incoming'):
     """
@@ -459,7 +431,6 @@ class AngelList(object):
     url += '&direction' + direction
     return _get_request(url)
 
-
   def get_startup_comments(self, id_):
     """ Retrieve the comments of a particular startup
     """
@@ -467,7 +438,6 @@ class AngelList(object):
                                                                api=_API_VERSION,
                                                                id_=id_,
                                                                at=self.access_token))
-
 
   def get_startups_filtered_by(self, filter_='raising'):
     """ Get startups based on which companies are raising funding
@@ -477,8 +447,6 @@ class AngelList(object):
                                                                          filter_=filter_)
     return _get_request(url)
 
-
-  # Status Updates
   def get_status_updates(self, startup_id):
     """ Get status updates of a startup
     """
