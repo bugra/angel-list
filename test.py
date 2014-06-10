@@ -93,6 +93,20 @@ class AngelListTestCase(unittest.TestCase):
       self.assertEqual(sorted(list(batch_[0].iterkeys())), sorted(keys))
 
 
+  def test_user(self):
+    id_ = 155
+    u_ = angel.get_user(id_)
+    expected_keys = sorted(['dribbble_url', 'image', 'locations', 'id',
+      'angellist_url', 'what_ive_built', 'what_i_do', 'follower_count', 'bio',
+      'online_bio_url', 'twitter_url', 'facebook_url', 'criteria', 'aboutme_url',
+      'investor', 'name', 'roles', 'skills', 'linkedin_url', 'github_url',
+      'behance_url', 'blog_url'])
+    self.assertEqual(type(u_), dict)
+    self.assertEqual(expected_keys, sorted(list(u_.iterkeys())))
+
+
+
+
   def test_comments(self):
     comments_ = angel.get_comments('Startup', KARMA_ID)
     self.assertEqual(type(comments_), list)
