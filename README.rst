@@ -7,9 +7,9 @@ any external libraries, so it should work out of the box.
 
 
 .. code-block:: pycon
->>> angel = AngelList(config.CLIENT_ID, config.CLIENT_SECRET, config.ACCESS_TOKEN)
+   >>> angel = AngelList(config.CLIENT_ID, config.CLIENT_SECRET, config.ACCESS_TOKEN)
 
-...
+   ...
 
 
 
@@ -23,8 +23,8 @@ Installation
 To install angel, simply:
 .. code-block:: bash
 
-$ pip install angel
-...
+   $ pip install angel
+   ...
 
 Documentation
 -------------
