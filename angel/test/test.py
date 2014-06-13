@@ -1,5 +1,7 @@
+import os
+import sys
 import unittest
-
+sys.path.insert(1, os.path.join(sys.path[0], '..'))
 import angel
 # Put your credentials into config.py
 # in the following format
