@@ -1,4 +1,5 @@
 import angel
+import sys
 
 try:
     from setuptools import setup
@@ -34,10 +35,8 @@ setup(
     license='MIT',
     zip_safe=False,
     classifiers=(
-        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
         'Natural Language :: English',
-        'License :: OSI Approved :: MIT',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
