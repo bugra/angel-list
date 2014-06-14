@@ -3,7 +3,9 @@ import sys
 import unittest
 sys.path.insert(1, os.path.join(sys.path[0], '..'))
 import angel
-# Put your credentials into config.py
+# Bad practice, do not do it
+from config import *
+# Put your credentials into py
 # in the following format
 """
 CLIENT_ID =
@@ -24,7 +26,6 @@ ANGELLIST_URL =
 ID =
 """
 
-import config
 
 VIACOM_ID = '40744'
 WHATSAPP_ID = '78902'
@@ -35,9 +36,9 @@ CB_INSIGHTS_ID = '344401'
 ANGELLIST_ID = '6702'
 
 angel = angel.AngelList(
-                                    config.CLIENT_ID,
-                                    config.CLIENT_SECRET,
-                                    config.ACCESS_TOKEN
+                                    CLIENT_ID,
+                                    CLIENT_SECRET,
+                                    ACCESS_TOKEN
                                   )
 
 
@@ -51,14 +52,14 @@ class AngelListTestCase(unittest.TestCase):
 
   def test_self(self):
     self_ = angel.get_self()
-    self.assertEqual(self_['name'], config.MY_NAME)
-    self.assertEqual(self_['twitter_url'], config.TWITTER_URL)
-    self.assertEqual(self_['online_bio_url'], config.ONLINE_BIO_URL)
-    self.assertEqual(self_['linkedin_url'], config.LINKEDIN_URL)
-    self.assertEqual(self_['github_url'], config.GITHUB_URL)
-    self.assertEqual(self_['email'], config.EMAIL)
-    self.assertEqual(self_['angellist_url'], config.ANGELLIST_URL)
-    self.assertEqual(int(self_['id']), config.ID)
+    self.assertEqual(self_['name'], MY_NAME)
+    self.assertEqual(self_['twitter_url'], TWITTER_URL)
+    self.assertEqual(self_['online_bio_url'], ONLINE_BIO_URL)
+    self.assertEqual(self_['linkedin_url'], LINKEDIN_URL)
+    self.assertEqual(self_['github_url'], GITHUB_URL)
+    self.assertEqual(self_['email'], EMAIL)
+    self.assertEqual(self_['angellist_url'], ANGELLIST_URL)
+    self.assertEqual(int(self_['id']), ID)
 
   def test_search_for_slugs(self):
     slug_ = angel.get_search_for_slugs('karma')
