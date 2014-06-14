@@ -3,8 +3,3 @@ python:
 - '2.6'
 - '2.7'
 script: python angel/test/test.py
-env:
-  matrix:
-  - secure: jVxrEIC1IJOcRJx9ZENUqpdk3Mbl9I6hXg/RvFrsoxojTRzHbiPjDdtrP2Zumn87WZQJM9xd1FS9h87+RgD3ypI5Fpb5CX5m/4WVi3x0Q7orxUmJR7ivZ4vwxlJcFAdaaAAkoOsVvtvK01/mUGA7tDqIPm2+nTRkb/yTpJywVR8=
-  - secure: era2SDJlz03xPlpu1mXEm4f5ebnD9YDkJvN3r4eSeJEBMjnj1JbnR+ovOyi1/MhIfphgtCvTcz0bWbR4r9jyRtDGgP8Ib9DEUix2PWdVIb+yX+e4euzQ17wjx88eqV4NxYjSE6BZo1tm0sMh0wJKXEH1tAdcHWdRMmG45q827U4=
-  - secure: mulkcQcKl0f/btmyqSTFFkr96uau6GaVKvVSRiBgbtbTYZafbZAqGFFYCvEy3LbSwt1sKdq/fhAfI2uYPdVqOpxbxPpxP6XIT1mKIA80sCZCfwft3qvoAw52CC0mzlKEddtAiDFFOnsxBsiiCkYPfkpl/G/uCXniCoRGCRoq5AU=
