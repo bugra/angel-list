@@ -279,7 +279,6 @@ class AngelList(object):
     url = _USERS_BATCH.format(c_api=_C_API_BEGINNING,
                                               api=_API_VERSION,
                                               ids=ids_)
-    print(url)
     return _get_request(url)
 
   # TODO
