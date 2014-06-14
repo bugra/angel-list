@@ -1,4 +1,4 @@
-Python API for Angellist 
+Python API for Angellist
 =========================
 
 Angel is a MIT Licensed Python library to access API of Angellist.
@@ -6,8 +6,14 @@ It currently supports Python 2.x and in development. It does not use
 any external libraries, so it should work out of the box.
 
 
-.. code-block:: pycon
-   >>> angel = AngelList(config.CLIENT_ID, config.CLIENT_SECRET, config.ACCESS_TOKEN)
+..
+    from angel import angel
+    al = angel.AngelList(YOUR_CLIENT_ID,
+                                              YOUR_CLIENT_SECRET,
+                                              YOUR_ACCESS_TOKEN
+                                              )
+    first_page_jobs = al.get_jobs(page=1)
+
 
    ...
 
@@ -15,16 +21,19 @@ any external libraries, so it should work out of the box.
 
 Features
 --------
-
+#. No external dependencies
+#. Consistent Api for different features of Angellist
+#. Test coverage
+#.
 
 Installation
 ------------
 
 To install angel, simply:
-.. code-block:: bash
-
-   $ pip install angel
+.. ::
+  $ pip install angel
    ...
+
 
 Documentation
 -------------
@@ -38,3 +47,10 @@ Contribute
 #. Send a pull request.
 
 .. _`the repository`: http://github.com/bugra/angel-list
+
+
+Known Issues
+-------------
+#. `put` and `delete` methods are not implemented.
+#. `scope of investing` is not implemented
+#. It does not support Python 3.
