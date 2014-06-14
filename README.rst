@@ -56,20 +56,30 @@ Test
 ----
 #. Create a `config.py` file under the `angel` directory.
 #. Put your credentials in the following way.
+#. Run the `test.py` under the `test` directory.
+#. Make sure that all tests are green.
 
   CLIENT_ID =
+
   CLIENT_SECRET =
+
   ACCESS_TOKEN =
 
   MY_NAME =
+
   TWITTER_URL =
+
   ONLINE_BIO_URL =
+
   LINKEDIN_URL =
+
   GITHUB_URL =
+
   EMAIL =
+
   ANGELLIST_URL =
+
   ID =
 
-#. Run the `test.py` under the `test` directory.
-#. Make sure that all tests are green.
+
 
