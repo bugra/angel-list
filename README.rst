@@ -10,10 +10,7 @@ Example
 --------
 
     from angel import angel
-    al = angel.AngelList(YOUR_CLIENT_ID,
-                                              YOUR_CLIENT_SECRET,
-                                              YOUR_ACCESS_TOKEN
-                                              )
+    al = angel.AngelList(CLIENT_ID, CLIENT_SECRET, ACCESS_TOKEN)
     first_page_jobs = al.get_jobs(page=1)
 
 
