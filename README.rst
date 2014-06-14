@@ -1,9 +1,9 @@
 Python API for Angellist
 =========================
 
-Angel is a MIT Licensed Python library to access API of Angellist.
+Angel is an MIT Licensed Python library to access API of Angellist.
 It currently supports Python 2.x and in development. It does not use
-any external libraries, so it should work out of the box.
+any external libraries and extensive test coverage.
 
 
 Example
@@ -14,8 +14,6 @@ Example
     al = angel.AngelList(CLIENT_ID, CLIENT_SECRET, ACCESS_TOKEN)
 
     first_page_jobs = al.get_jobs(page=1)
-
-
 
 
 
@@ -52,3 +50,26 @@ Known Issues
 #. `put` and `delete` methods are not implemented.
 #. `scope of investing` is not implemented
 #. It does not support Python 3.
+#. It requires `Access Token` for the api calls that do not require one.
+
+Test
+----
+#. Create a `config.py` file under the `angel` directory.
+#. Put your credentials in the following way.
+
+  CLIENT_ID =
+  CLIENT_SECRET =
+  ACCESS_TOKEN =
+
+  MY_NAME =
+  TWITTER_URL =
+  ONLINE_BIO_URL =
+  LINKEDIN_URL =
+  GITHUB_URL =
+  EMAIL =
+  ANGELLIST_URL =
+  ID =
+
+#. Run the `test.py` under the `test` directory.
+#. Make sure that all tests are green.
+
