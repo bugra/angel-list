@@ -1,5 +1,9 @@
 Python API for Angellist
 =========================
+.. image:: https://badge.fury.io/py/angel.svg
+    :target: http://badge.fury.io/py/angel
+
+
 
 Angel is an MIT Licensed Python library to access API of Angellist.
 It currently supports Python 2.x and in development. It does not use
