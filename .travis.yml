@@ -1,5 +1,10 @@
 language: python
 python:
-  - "2.6"
-  - "2.7"
+- '2.6'
+- '2.7'
 script: python angel/test/test.py
+env:
+  matrix:
+  - secure: tSnTBFp/9UgI6610ziEUO2o58YBeftv48JcFlpNXNHm0kBg6LrAAHGGtK+UqXMa4BOz3gzhn592RG4ord0rJ5wHquzGRaCsx5F/JqxaTzmqVTaCcawfCbBu+8lEfE/6VBpeXzBsHTjaKpt7ptznmI+2ZHa0MbOivt0jIHhCboOA=
+  - secure: mL76+CIk85f5m1oR9LM1GijVL/4Moglg7dxfLT1YpI1UR00hAAOEDY6eH0hZYyE42MAgYf5kaRRFeLsD1GEPvyeF/N1fOdXIj2jfrssgR5867uShNO+b5jRMXaV5arMXGbRTRct9AUroAop5q8YvQYH5hrMWNjo2cy/bn/BglDY=
+  - secure: Jg8HwZE7JPldChb9AMarq636dlD2xdZw58QzP8KaAfKKQSPY8PsBjEvpevdH5tUj7LORlJU354GPhjY59n93SFSAfZD7lJl/HJX8adgyqksSkCopPU7wEhgLEvBLRFD6ByQ24OAe9kcXNEEPD3WHtAnS3n62kaalTvS9JqwaaRI=

@@ -1,6 +1,7 @@
-CLIENT_ID = 'YOURCLIENT_ID'
-CLIENT_SECRET = 'YOURCLIENT_SECRET'
-ACCESS_TOKEN = 'YOURACCESS_TOKEN'
+#CLIENT_ID = #
+#CLIENT_SECRET =
+#ACCESS_TOKEN =
+
 
 # Change the following credentials to your account
 MY_NAME = 'Bugra Akyildiz'
