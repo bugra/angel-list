@@ -35,7 +35,7 @@ _STARTUP_C = '{c_api}/{api}/startups/{id_}/comments?access_token={at}'
 _TAGS = '{c_api}/{api}/tags/{id_}/?access_token={at}'
 _TAGS_CHILDREN = '{c_api}/{api}/tags/{id_}/children?access_token={at}'
 _TAGS_PARENTS = '{c_api}/{api}/tags/{id_}/parents?access_token={at}'
-_TAGS_STARTUPS = '{c_api}/{api}/tags/{id_}/startups?access_token={at}'
+_TAGS_STARTUPS = '{c_api}/{api}/tags/{id_}/startups'#?access_token={at}'
 _TAGS_USERS = '{c_api}/{api}/tags/{id_}/users?access_token={at}'
 _STATUS_U = '{c_api}/{api}/status_updates?startup_id={startup_id}?access_token={at}'
 _REVIEWS_USER = '{c_api}/{api}/reviews?user_id={user_id}?access_token={at}'
@@ -45,7 +45,7 @@ _SELF = '{c_api}/{api}/me?access_token={at}'
 _USERS = '{c_api}/{api}/users/{id_}?access_token={at}'
 _USERS_R = '{c_api}/{api}/users/{id_}/roles?access_token={at}'
 _USERS_S = '{c_api}/{api}/users/search?access_token={at}'
-_USERS_BATCH = '{c_api}/{api}/users/batch?ids={ids}?access_token={at}'
+_USERS_BATCH = '{c_api}/{api}/users/batch?ids={ids}'#?access_token={at}'
 _S_SEARCH = '{c_api}/{api}/search?query={query}'
 _SLUG_SEARCH = '{c_api}/{api}/search/slugs?query={slug}'
 _COM = '{c_api}/{api}/comments?commentable_type={ct}&commentable_id={id_}'
@@ -278,8 +278,8 @@ class AngelList(object):
     ids_ = ','.join(ids)
     url = _USERS_BATCH.format(c_api=_C_API_BEGINNING,
                                               api=_API_VERSION,
-                                              ids=ids_,
-                                              at=self.access_token)
+                                              ids=ids_)
+    print(url)
     return _get_request(url)
 
   # TODO
@@ -382,8 +382,7 @@ class AngelList(object):
   def get_tags_startups(self, id_):
     return _get_request(_TAGS_STARTUPS.format(c_api=_C_API_BEGINNING,
                                                                       api=_API_VERSION,
-                                                                      id_=id_,
-                                                                      at=self.access_token))
+                                                                      id_=id_))
 
   def get_tags_users(self, id_):
     """ Get a particular user which are tagged based on the id_
