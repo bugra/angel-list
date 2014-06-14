@@ -501,4 +501,5 @@ class AngelList(object):
 
 
 if __name__ == '__main__':
-  angel = AngelList(config.CLIENT_ID, config.CLIENT_SECRET, config.ACCESS_TOKEN)
+  #angel = AngelList(config.CLIENT_ID, config.CLIENT_SECRET, config.ACCESS_TOKEN)
+  pass
