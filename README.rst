@@ -7,7 +7,7 @@ Python API for Angellist
 
 Angel is an MIT Licensed Python library to access API of Angellist.
 It currently supports Python 2.x and in development. It does not use
-any external libraries and extensive test coverage.
+any external libraries and has extensive test coverage.
 
 
 Example
