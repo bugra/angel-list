@@ -6,7 +6,9 @@ It currently supports Python 2.x and in development. It does not use
 any external libraries, so it should work out of the box.
 
 
-..
+Example
+--------
+
     from angel import angel
     al = angel.AngelList(YOUR_CLIENT_ID,
                                               YOUR_CLIENT_SECRET,
@@ -15,7 +17,6 @@ any external libraries, so it should work out of the box.
     first_page_jobs = al.get_jobs(page=1)
 
 
-   ...
 
 
 
@@ -24,15 +25,13 @@ Features
 #. No external dependencies
 #. Consistent Api for different features of Angellist
 #. Test coverage
-#.
 
 Installation
 ------------
 
 To install angel, simply:
-.. ::
+
   $ pip install angel
-   ...
 
 
 Documentation
