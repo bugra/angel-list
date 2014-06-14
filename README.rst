@@ -10,7 +10,9 @@ Example
 --------
 
     from angel import angel
+
     al = angel.AngelList(CLIENT_ID, CLIENT_SECRET, ACCESS_TOKEN)
+
     first_page_jobs = al.get_jobs(page=1)
 
 
@@ -26,7 +28,7 @@ Features
 Installation
 ------------
 
-To install angel, simply:
+To install angel, simply use `pip`:
 
   $ pip install angel
 
