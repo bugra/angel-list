@@ -122,10 +122,10 @@ class AngelList(object):
                                                       at=self.access_token))
 
   def get_job_by_id(self, id_):
-    return _get_request(_JOBS_ID.format(c_api=_C_API_BEGINNING,
+    url = _JOBS_ID.format(c_api=_C_API_BEGINNING,
                                                 api=_API_VERSION,
-                                                id_=id_,
-                                                at=self.access_token))
+                                                id_=id_)
+    return _get_request(url)
 
   def get_startup_jobs(self, id_):
     return _get_request(_STARTUP_ID_JOBS.format(c_api=_C_API_BEGINNING,
@@ -134,10 +134,11 @@ class AngelList(object):
                                                         at=self.access_token))
 
   def get_tag_jobs(self, id_):
-    return _get_request(_TAG_ID_JOBS.format(c_api=_C_API_BEGINNING,
+    url = _TAG_ID_JOBS.format(c_api=_C_API_BEGINNING,
                                                     api=_API_VERSION,
-                                                    id_=id_,
-                                                    at=self.access_token))
+                                                    id_=id_)
+    return _get_request(url)
+
 
   def get_comments(self, commentable_type, id_):
     """
