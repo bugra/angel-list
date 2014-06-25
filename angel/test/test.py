@@ -239,10 +239,13 @@ class AngelListTestCase(unittest.TestCase):
     self.assertEqual(type(s_), dict)
     self.assertEqual(sorted(list(s_.iterkeys())), expected_keys)
     i_ = s_['startups'][0]
-    expected_keys = sorted(['status', 'crunchbase_url', 'fundraising', 'video_url', 'company_url', 'company_type', 'locations', 'quality',
-                                          'id', 'angellist_url', 'screenshots', 'follower_count', 'hidden', 'launch_date', 'markets', 'community_profile',
-                                          'product_desc', 'twitter_url', 'high_concept', 'updated_at', 'thumb_url', 'company_size', 'logo_url', 'name',
-                                          'created_at', 'blog_url'])
+    expected_keys = sorted(['status', 'crunchbase_url', 'fundraising',
+      'video_url', 'company_url', 'company_type', 'updated_at', 'quality',
+      'id', 'angellist_url', 'screenshots', 'follower_count', 'hidden',
+      'launch_date', 'markets', 'community_profile', 'product_desc',
+      'twitter_url', 'high_concept', 'facebook_url', 'locations', 'thumb_url',
+      'company_size', 'logo_url', 'name', 'created_at', 'linkedin_url',
+      'blog_url'])
     self.assertEqual(sorted(list(i_.iterkeys())), expected_keys)
 
   def test_startup_roles(self):
