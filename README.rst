@@ -23,7 +23,7 @@ Example
 
     first_page_jobs = al.get_jobs(page=1)
 
-Some capabilities of module is `here <http://nbviewer.ipython.org/urls/gist.githubusercontent.com/bugra/5236ca2c69695d2afa37/raw/f8ad23c7678880729e745377cfc9e75201a6b05a/Examples%20from%20Module>`_.
+Some capabilities of module are `here <http://nbviewer.ipython.org/urls/gist.githubusercontent.com/bugra/5236ca2c69695d2afa37/raw/f8ad23c7678880729e745377cfc9e75201a6b05a/Examples%20from%20Module>`_.
 
 Features
 --------
