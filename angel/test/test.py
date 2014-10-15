@@ -99,9 +99,9 @@ class AngelListTestCase(unittest.TestCase):
     u_ = angel.get_user(id_)
     expected_keys = sorted(['dribbble_url', 'image', 'locations', 'id',
       'angellist_url', 'what_ive_built', 'what_i_do', 'follower_count', 'bio',
-      'online_bio_url', 'twitter_url', 'facebook_url', 'criteria', 'aboutme_url',
-      'investor', 'name', 'roles', 'skills', 'linkedin_url', 'github_url',
-      'behance_url', 'blog_url'])
+      'online_bio_url', 'twitter_url', 'facebook_url', 'criteria',
+      'aboutme_url', 'investor', 'name', 'roles', 'resume_url', 'skills',
+      'linkedin_url', 'github_url', 'behance_url', 'blog_url'])
     self.assertEqual(type(u_), dict)
     self.assertEqual(expected_keys, sorted(list(u_.iterkeys())))
 
@@ -140,7 +140,6 @@ class AngelListTestCase(unittest.TestCase):
     jobs_ = angel.get_startup_jobs(ANGELLIST_ID)
     # Based on the assumption that the job posting will not be removed
     j_ = jobs_[0]
-    print(j_)
     self.assertEqual(type(j_), dict)
     self.assertEqual(int(j_['id']), 97)
     self.assertEqual(j_['angellist_url'],
@@ -163,7 +162,7 @@ class AngelListTestCase(unittest.TestCase):
     self.assertEqual(sorted(expected_job_keys), sorted(list(jobs_.iterkeys())))
 
   def test_likes(self):
-    likes_ = angel.get_likes('Comment', 3800)
+    likes_ = angel.get_likes('Comment', 3804)
     expected_job_keys = sorted(['per_page', 'last_page', 'total', 'likes', 'page'])
     self.assertEqual(sorted(expected_job_keys), sorted(list(likes_.iterkeys())))
     self.assertEqual(type(likes_['likes']), list)

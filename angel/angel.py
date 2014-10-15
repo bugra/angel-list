@@ -8,9 +8,9 @@ import urllib2
 _API_VERSION = 1
 
 _POST_HEADER = {
-                            "Content-type": "application/x-www-form-urlencoded",
-                            "Accept": "text/plain"
-                           }
+                "Content-type": "application/x-www-form-urlencoded",
+                "Accept": "text/plain"
+               }
 
 _DELETE_HEADER = ['Content-Type', 'text/plain']
 
@@ -229,6 +229,7 @@ class AngelList(object):
                                                        api=_API_VERSION,
                                                        t=self.access_token))
     except (RuntimeError, TypeError, NameError) as e:
+      print(e)
       raise NotImplementedError()
 
   # TODO
@@ -263,12 +264,6 @@ class AngelList(object):
                                                            id_=id_,
                                                            api=_API_VERSION,
                                                            at=self.access_token))
-
-  def get_user_batch(self, ids):
-    return _get_request(_USERS_B.format(c_api=_C_API_BEGINNING,
-                                                           ids=','.join((ids),
-                                                            api=_API_VERSION,
-                                                            at=self.access_token)))
 
   def get_users_batch(self, ids):
     """
