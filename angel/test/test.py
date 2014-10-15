@@ -84,7 +84,13 @@ class AngelListTestCase(unittest.TestCase):
     ids = list(map(lambda k: str(k), range(n)))
     batch_ = angel.get_users_batch(ids)
     self.assertTrue(len(batch_) <= n)
-    keys = [u'dribbble_url', u'image', u'locations', u'id', u'angellist_url', u'resume_url', u'what_i_do', u'follower_count', u'bio', u'online_bio_url', u'twitter_url', u'facebook_url', u'criteria', u'aboutme_url', u'investor', u'name', u'roles', u'skills', u'linkedin_url', u'github_url', u'behance_url', u'blog_url']
+    keys = [u'dribbble_url', u'image', u'locations', u'id', u'angellist_url',
+            u'resume_url', u'what_i_do', u'follower_count', u'bio',
+            u'online_bio_url', u'twitter_url', u'facebook_url', u'criteria',
+            u'aboutme_url', u'investor', u'name', u'roles', u'skills',
+            u'linkedin_url', u'github_url', u'behance_url', u'blog_url',
+            u'what_ive_built'
+            ]
     if batch_ and len(batch_) > 0:
       self.assertEqual(sorted(list(batch_[0].iterkeys())), sorted(keys))
 
@@ -92,7 +98,7 @@ class AngelListTestCase(unittest.TestCase):
     id_ = 155
     u_ = angel.get_user(id_)
     expected_keys = sorted(['dribbble_url', 'image', 'locations', 'id',
-      'angellist_url', 'resume_url', 'what_i_do', 'follower_count', 'bio',
+      'angellist_url', 'what_ive_built', 'what_i_do', 'follower_count', 'bio',
       'online_bio_url', 'twitter_url', 'facebook_url', 'criteria', 'aboutme_url',
       'investor', 'name', 'roles', 'skills', 'linkedin_url', 'github_url',
       'behance_url', 'blog_url'])
@@ -118,7 +124,7 @@ class AngelListTestCase(unittest.TestCase):
     self.assertEqual(type(j_), dict)
     self.assertEqual(int(j_['id']), 97)
     self.assertEqual(j_['angellist_url'],
-      'https://angel.co/jobs?startup_id={}'.format(ANGELLIST_ID))
+                     u'https://angel.co/angellist/jobs/97-engineer')
     self.assertEqual(j_['created_at'], '2011-12-05T21:05:43Z')
     self.assertEqual(j_['currency_code'], 'USD')
     self.assertEqual(float(j_['equity_cliff']), 1.0)
@@ -134,10 +140,11 @@ class AngelListTestCase(unittest.TestCase):
     jobs_ = angel.get_startup_jobs(ANGELLIST_ID)
     # Based on the assumption that the job posting will not be removed
     j_ = jobs_[0]
+    print(j_)
     self.assertEqual(type(j_), dict)
     self.assertEqual(int(j_['id']), 97)
     self.assertEqual(j_['angellist_url'],
-      'https://angel.co/jobs?startup_id={}'.format(ANGELLIST_ID))
+                     'https://angel.co/angellist/jobs/97-engineer')
     self.assertEqual(j_['created_at'], '2011-12-05T21:05:43Z')
     self.assertEqual(j_['currency_code'], 'USD')
     self.assertEqual(float(j_['equity_cliff']), 1.0)
