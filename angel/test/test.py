@@ -84,7 +84,7 @@ class AngelListTestCase(unittest.TestCase):
     ids = list(map(lambda k: str(k), range(n)))
     batch_ = angel.get_users_batch(ids)
     self.assertTrue(len(batch_) <= n)
-    keys = [u'dribbble_url', u'image', u'locations', u'id', u'angellist_url', u'what_ive_built', u'what_i_do', u'follower_count', u'bio', u'online_bio_url', u'twitter_url', u'facebook_url', u'criteria', u'aboutme_url', u'investor', u'name', u'roles', u'skills', u'linkedin_url', u'github_url', u'behance_url', u'blog_url']
+    keys = [u'dribbble_url', u'image', u'locations', u'id', u'angellist_url', u'resume_url', u'what_i_do', u'follower_count', u'bio', u'online_bio_url', u'twitter_url', u'facebook_url', u'criteria', u'aboutme_url', u'investor', u'name', u'roles', u'skills', u'linkedin_url', u'github_url', u'behance_url', u'blog_url']
     if batch_ and len(batch_) > 0:
       self.assertEqual(sorted(list(batch_[0].iterkeys())), sorted(keys))
 
@@ -92,7 +92,7 @@ class AngelListTestCase(unittest.TestCase):
     id_ = 155
     u_ = angel.get_user(id_)
     expected_keys = sorted(['dribbble_url', 'image', 'locations', 'id',
-      'angellist_url', 'what_ive_built', 'what_i_do', 'follower_count', 'bio',
+      'angellist_url', 'resume_url', 'what_i_do', 'follower_count', 'bio',
       'online_bio_url', 'twitter_url', 'facebook_url', 'criteria', 'aboutme_url',
       'investor', 'name', 'roles', 'skills', 'linkedin_url', 'github_url',
       'behance_url', 'blog_url'])
