@@ -49,10 +49,11 @@ _USERS_BATCH = '{c_api}/{api}/users/batch?ids={ids}'#?access_token={at}'
 _S_SEARCH = '{c_api}/{api}/search?query={query}'
 _SLUG_SEARCH = '{c_api}/{api}/search/slugs?query={slug}'
 _COM = '{c_api}/{api}/comments?commentable_type={ct}&commentable_id={id_}'
-_JOBS = '{c_api}/{api}/jobs?page={pg}'
+#_JOBS = '{c_api}/{api}/jobs?page={pg}'
+_JOBS = '{c_api}/{api}/jobs?page={pg}&access_token={at}'
 _JOBS_ID = '{c_api}/{api}/jobs/{id_}'
 _STARTUP_ID_JOBS = '{c_api}/{api}/startups/{id_}/jobs'
-_TAG_ID_JOBS = '{c_api}/{api}/tags/{id_}/jobs'
+_TAG_ID_JOBS = '{c_api}/{api}/tags/{id_}/jobs?page={pg}&access_token={at}'
 _LIKES = '{c_api}/{api}/likes?likable_type={lt}&likable_id={li}'
 _MESSAGES = '{c_api}/{api}/messages?access_token={at}'
 _MESSAGES_THREAD = '{c_api}/{api}/messages/{id_}?access_token={at}'
@@ -133,7 +134,7 @@ class AngelList(object):
                                                         id_=id_,
                                                         at=self.access_token))
 
-  def get_tag_jobs(self, id_):
+  def get_tag_jobs(self, id_,page=1):
     url = _TAG_ID_JOBS.format(c_api=_C_API_BEGINNING,
                                                     api=_API_VERSION,
                                                     id_=id_)
