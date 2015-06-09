@@ -3,6 +3,7 @@ import sys
 import unittest
 sys.path.insert(1, os.path.join(sys.path[0], '..'))
 import angel
+import json
 # Put your credentials into config.py
 # in the following format
 """
@@ -51,6 +52,7 @@ class AngelListTestCase(unittest.TestCase):
 
   def test_self(self):
     self_ = angel.get_self()
+   # print json.dumps(self_, indent=4, sort_keys=True)
     self.assertEqual(self_['name'], config.MY_NAME)
     self.assertEqual(self_['twitter_url'], config.TWITTER_URL)
     self.assertEqual(self_['online_bio_url'], config.ONLINE_BIO_URL)
@@ -59,7 +61,7 @@ class AngelListTestCase(unittest.TestCase):
     self.assertEqual(self_['email'], config.EMAIL)
     self.assertEqual(self_['angellist_url'], config.ANGELLIST_URL)
     self.assertEqual(int(self_['id']), config.ID)
-
+     
   def test_search_for_slugs(self):
     slug_ = angel.get_search_for_slugs('karma')
     self.assertEqual(int(slug_['id']), int(KARMA_ID))
@@ -115,10 +117,12 @@ class AngelListTestCase(unittest.TestCase):
     # Test two pages
     for pg in [1, 2]:
       jobs_ = angel.get_jobs(page=pg)
+      print json.dumps(jobs_, indent=4, sort_keys=True)
+      #sys.exit(3)  
       expected_job_keys = sorted(['per_page', 'last_page', 'total', 'jobs', 'page'])
       self.assertEqual(type(jobs_), dict)
       self.assertEqual(expected_job_keys, sorted(list(jobs_.iterkeys())))
-
+'''
   def test_job_by_id(self):
     j_ = angel.get_job_by_id(97)
     self.assertEqual(type(j_), dict)
@@ -479,6 +483,6 @@ class AngelListTestCase(unittest.TestCase):
     self.assertEqual(ee, sorted(list(c_['connector'])))
     eee = sorted(['out', 'via', 'type', 'in'])
     self.assertEqual(eee, sorted(list(c_['connection'])))
-
+'''
 if __name__ == '__main__':
   unittest.main()
