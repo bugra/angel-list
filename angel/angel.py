@@ -57,6 +57,7 @@ _TAG_ID_JOBS = '{c_api}/{api}/tags/{id_}/jobs?page={pg}&access_token={at}'
 _LIKES = '{c_api}/{api}/likes?likable_type={lt}&likable_id={li}'
 _MESSAGES = '{c_api}/{api}/messages?access_token={at}'
 _MESSAGES_THREAD = '{c_api}/{api}/messages/{id_}?access_token={at}'
+#_PATHS = '{c_api}/{api}/paths?user_ids={user_ids}&direction={direction}&access_token={at}'
 _PATHS = '{c_api}/{api}/paths?access_token={at}'
 _PRESS = '{c_api}/{api}/press?access_token={at}&startup_id={id_}'
 _PRESS_BY_ID = '{c_api}/{api}/press/{id_}?access_token={at}'
@@ -200,6 +201,9 @@ class AngelList(object):
 
     paths_url = _PATHS.format(c_api=_C_API_BEGINNING,
                                       api=_API_VERSION,
+                                      #startup_ids=startup_ids,
+				     #user_ids=user_ids,
+				      #direction=direction,
                                       at=self.access_token)
     if not user_ids is None:
       paths_url += '&' + _USER_IDS_SUFFIX.format(user_ids=user_ids)
@@ -208,6 +212,7 @@ class AngelList(object):
                                                     startup_ids=startup_ids)
     if not direction is None:
       paths_url += '&' + _DIRECTION_SUFFIX.format(direction=direction)
+    print path_url
     return _get_request(paths_url)
 
   def get_press(self, startup_id):

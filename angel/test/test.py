@@ -113,50 +113,53 @@ class AngelListTestCase(unittest.TestCase):
     self.assertEqual(type(comments_[0]), dict)
     self.assertTrue(len(comments_) > 6)
 
-  def test_jobs(self):
-    # Test two pages
-    for pg in [1, 2]:
-      jobs_ = angel.get_jobs(page=pg)
-      print json.dumps(jobs_, indent=4, sort_keys=True)
-      #sys.exit(3)  
-      expected_job_keys = sorted(['per_page', 'last_page', 'total', 'jobs', 'page'])
-      self.assertEqual(type(jobs_), dict)
-      self.assertEqual(expected_job_keys, sorted(list(jobs_.iterkeys())))
-'''
-  def test_job_by_id(self):
-    j_ = angel.get_job_by_id(97)
-    self.assertEqual(type(j_), dict)
-    self.assertEqual(int(j_['id']), 97)
-    self.assertEqual(j_['angellist_url'],
-                     u'https://angel.co/angellist/jobs/97-engineer')
-    self.assertEqual(j_['created_at'], '2011-12-05T21:05:43Z')
-    self.assertEqual(j_['currency_code'], 'USD')
-    self.assertEqual(float(j_['equity_cliff']), 1.0)
-    self.assertEqual(float(j_['equity_max']), 0.2)
-    self.assertEqual(float(j_['equity_min']), 0.2)
-    self.assertEqual(float(j_['equity_vest']), 6.0)
-    self.assertEqual(int(j_['salary_max']), 150000)
-    self.assertEqual(int(j_['salary_min']), 120000)
-    # Make sure that the resulting data structure is a data type
-    self.assertEqual(type(j_['startup']), dict)
 
-  def test_startup_jobs(self):
-    jobs_ = angel.get_startup_jobs(ANGELLIST_ID)
-    # Based on the assumption that the job posting will not be removed
-    j_ = jobs_[0]
-    self.assertEqual(type(j_), dict)
-    self.assertEqual(int(j_['id']), 97)
-    self.assertEqual(j_['angellist_url'],
-                     'https://angel.co/angellist/jobs/97-engineer')
-    self.assertEqual(j_['created_at'], '2011-12-05T21:05:43Z')
-    self.assertEqual(j_['currency_code'], 'USD')
-    self.assertEqual(float(j_['equity_cliff']), 1.0)
-    self.assertEqual(float(j_['equity_max']), 0.2)
-    self.assertEqual(float(j_['equity_min']), 0.2)
-    self.assertEqual(float(j_['equity_vest']), 6.0)
-    self.assertEqual(int(j_['salary_max']), 150000)
-    self.assertEqual(int(j_['salary_min']), 120000)
-    self.assertEqual(type(j_['startup']), dict)
+  if False:
+
+          def test_jobs(self):
+            # Test two pages
+            for pg in [1, 2]:
+              jobs_ = angel.get_jobs(page=pg)
+              print json.dumps(jobs_, indent=4, sort_keys=True)
+              #sys.exit(3)  
+              expected_job_keys = sorted(['per_page', 'last_page', 'total', 'jobs', 'page'])
+              self.assertEqual(type(jobs_), dict)
+              self.assertEqual(expected_job_keys, sorted(list(jobs_.iterkeys())))
+
+          def test_job_by_id(self):
+            j_ = angel.get_job_by_id(97)
+            self.assertEqual(type(j_), dict)
+            self.assertEqual(int(j_['id']), 97)
+            self.assertEqual(j_['angellist_url'],
+                             u'https://angel.co/angellist/jobs/97-engineer')
+            self.assertEqual(j_['created_at'], '2011-12-05T21:05:43Z')
+            self.assertEqual(j_['currency_code'], 'USD')
+            self.assertEqual(float(j_['equity_cliff']), 1.0)
+            self.assertEqual(float(j_['equity_max']), 0.2)
+            self.assertEqual(float(j_['equity_min']), 0.2)
+            self.assertEqual(float(j_['equity_vest']), 6.0)
+            self.assertEqual(int(j_['salary_max']), 150000)
+            self.assertEqual(int(j_['salary_min']), 120000)
+            # Make sure that the resulting data structure is a data type
+            self.assertEqual(type(j_['startup']), dict)
+
+          def test_startup_jobs(self):
+            jobs_ = angel.get_startup_jobs(ANGELLIST_ID)
+            # Based on the assumption that the job posting will not be removed
+            j_ = jobs_[0]
+            self.assertEqual(type(j_), dict)
+            self.assertEqual(int(j_['id']), 97)
+            self.assertEqual(j_['angellist_url'],
+                             'https://angel.co/angellist/jobs/97-engineer')
+            self.assertEqual(j_['created_at'], '2011-12-05T21:05:43Z')
+            self.assertEqual(j_['currency_code'], 'USD')
+            self.assertEqual(float(j_['equity_cliff']), 1.0)
+            self.assertEqual(float(j_['equity_max']), 0.2)
+            self.assertEqual(float(j_['equity_min']), 0.2)
+            self.assertEqual(float(j_['equity_vest']), 6.0)
+            self.assertEqual(int(j_['salary_max']), 150000)
+            self.assertEqual(int(j_['salary_min']), 120000)
+            self.assertEqual(type(j_['startup']), dict)
 
   def test_tag_jobs(self):
     jobs_ = angel.get_tag_jobs(1692)
@@ -409,6 +412,9 @@ class AngelListTestCase(unittest.TestCase):
     self.assertEqual(type(f_elem['id']), unicode)
     self.assertEqual(type(f_elem['comments']), int)
     self.assertEqual(type(f_elem['likes']), int)
+    #print f_elem['likes']
+    #print f_elem['actor']
+    #print "-----"
     self.assertEqual(type(f_elem['actor']), dict)
     self.assertEqual(type(f_elem['item']), dict)
     f_ = angel.get_feeds(personalized=True)
@@ -471,6 +477,8 @@ class AngelListTestCase(unittest.TestCase):
     direction = 'following'
     user_ids = [2, 155]
     p_ = angel.get_paths(user_ids=user_ids, direction=direction)
+    print p_
+    #print "-----J--"
     expected_keys = sorted([u'2', u'155'])
     self.assertEqual(expected_keys, sorted(list(p_.iterkeys())))
     self.assertEqual(type(p_['2']), list)
@@ -483,6 +491,6 @@ class AngelListTestCase(unittest.TestCase):
     self.assertEqual(ee, sorted(list(c_['connector'])))
     eee = sorted(['out', 'via', 'type', 'in'])
     self.assertEqual(eee, sorted(list(c_['connection'])))
-'''
+
 if __name__ == '__main__':
   unittest.main()

@@ -48,3 +48,5 @@ notebooks/
 
 # IDE baggage
 *.swp
+*.swn
+*.swo
