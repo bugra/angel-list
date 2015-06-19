@@ -161,300 +161,300 @@ class AngelListTestCase(unittest.TestCase):
             self.assertEqual(int(j_['salary_min']), 120000)
             self.assertEqual(type(j_['startup']), dict)
 
-  def test_tag_jobs(self):
-    jobs_ = angel.get_tag_jobs(1692)
-    self.assertEqual(type(jobs_), dict)
-    self.assertEqual(type(jobs_['jobs']), list)
-    expected_job_keys = sorted(['per_page', 'last_page', 'total', 'jobs', 'page'])
-    self.assertEqual(sorted(expected_job_keys), sorted(list(jobs_.iterkeys())))
+          def test_tag_jobs(self):
+            jobs_ = angel.get_tag_jobs(1692)
+            self.assertEqual(type(jobs_), dict)
+            self.assertEqual(type(jobs_['jobs']), list)
+            expected_job_keys = sorted(['per_page', 'last_page', 'total', 'jobs', 'page'])
+            self.assertEqual(sorted(expected_job_keys), sorted(list(jobs_.iterkeys())))
 
-  def test_likes(self):
-    likes_ = angel.get_likes('Comment', 3804)
-    expected_job_keys = sorted(['per_page', 'last_page', 'total', 'likes', 'page'])
-    self.assertEqual(sorted(expected_job_keys), sorted(list(likes_.iterkeys())))
-    self.assertEqual(type(likes_['likes']), list)
+          def test_likes(self):
+            likes_ = angel.get_likes('Comment', 3804)
+            expected_job_keys = sorted(['per_page', 'last_page', 'total', 'likes', 'page'])
+            self.assertEqual(sorted(expected_job_keys), sorted(list(likes_.iterkeys())))
+            self.assertEqual(type(likes_['likes']), list)
 
-  def test_messages(self):
-    m_ = angel.get_messages()
-    expected_message_keys = sorted(['per_page', 'last_page', 'total', 'messages', 'page'])
-    self.assertEqual(sorted(list(m_.iterkeys())), expected_message_keys)
+          def test_messages(self):
+            m_ = angel.get_messages()
+            expected_message_keys = sorted(['per_page', 'last_page', 'total', 'messages', 'page'])
+            self.assertEqual(sorted(list(m_.iterkeys())), expected_message_keys)
 
-  def test_press(self):
-    for id_ in [ANGELLIST_ID, CB_INSIGHTS_ID]:
-      m_ = angel.get_press(id_)
-      expected_message_keys = sorted(['per_page', 'last_page', 'total', 'press', 'page'])
-      self.assertEqual(sorted(list(m_.iterkeys())), expected_message_keys)
+          def test_press(self):
+            for id_ in [ANGELLIST_ID, CB_INSIGHTS_ID]:
+              m_ = angel.get_press(id_)
+              expected_message_keys = sorted(['per_page', 'last_page', 'total', 'press', 'page'])
+              self.assertEqual(sorted(list(m_.iterkeys())), expected_message_keys)
 
-  def test_press_id(self):
-    expected_keys = sorted(['title', 'url', 'created_at', 'updated_at', 'id', 'snippet', 'owner_type', 'posted_at', 'owner_id'])
-    p_ = angel.get_press_by_id(990)
-    self.assertEqual(sorted(list(p_.iterkeys())), expected_keys)
-    self.assertEqual(int(p_['id']), 990)
-    self.assertEqual(p_['owner_id'], 89289)
-    self.assertEqual(p_['url'], ('http://goaleurope.com/2012/04/11/introducing-'
-                                              'ukranian-accelerator-eastlabs-and-its-first-teams/'))
-    self.assertEqual(p_['updated_at'], '2012-05-10T17:10:23Z')
-    self.assertEqual(p_['created_at'], '2012-05-10T17:10:23Z')
-    self.assertEqual(p_['title'], ('Startup news from Ukraine: gift selection'
-                                          ' service ActiveGift launches today'))
-    self.assertEqual(p_['snippet'], ('Introducing Ukranian accelerator'
-                                                ' Eastlabs and its first teams'))
-    self.assertEqual(p_['posted_at'], '2012-04-11')
-    self.assertEqual(p_['owner_type'], 'Startup')
+          def test_press_id(self):
+            expected_keys = sorted(['title', 'url', 'created_at', 'updated_at', 'id', 'snippet', 'owner_type', 'posted_at', 'owner_id'])
+            p_ = angel.get_press_by_id(990)
+            self.assertEqual(sorted(list(p_.iterkeys())), expected_keys)
+            self.assertEqual(int(p_['id']), 990)
+            self.assertEqual(p_['owner_id'], 89289)
+            self.assertEqual(p_['url'], ('http://goaleurope.com/2012/04/11/introducing-'
+                                                      'ukranian-accelerator-eastlabs-and-its-first-teams/'))
+            self.assertEqual(p_['updated_at'], '2012-05-10T17:10:23Z')
+            self.assertEqual(p_['created_at'], '2012-05-10T17:10:23Z')
+            self.assertEqual(p_['title'], ('Startup news from Ukraine: gift selection'
+                                                  ' service ActiveGift launches today'))
+            self.assertEqual(p_['snippet'], ('Introducing Ukranian accelerator'
+                                                        ' Eastlabs and its first teams'))
+            self.assertEqual(p_['posted_at'], '2012-04-11')
+            self.assertEqual(p_['owner_type'], 'Startup')
 
-  def test_startup_roles(self):
-    # Companies that Andreesseen Horowitz is tagged in
-    # https://angel.co/api/spec/startups#GET_startups_%3Aid_roles
-    id_ = 37820
-    direction_ = 'outgoing'
-    a16z_ = angel.get_startup_roles(id_, direction=direction_)
-    keys = sorted(['per_page', 'last_page', 'total', 'startup_roles', 'page'])
-    self.assertEqual(sorted(list(a16z_.iterkeys())), keys)
-    a_ = a16z_['startup_roles'][0]
-    self.assertTrue('startup' in a_)
-    c_ = a_['startup']
-    self.assertEqual(c_['angellist_url'], 'https://angel.co/andreessen-horowitz')
-    self.assertEqual(c_['company_url'], 'http://www.a16z.com/')
-    self.assertEqual(c_['high_concept'], ('Helping the greatest tech entrepreneurs'
-                                                        ' build the best tech companies'))
-    self.assertEqual(c_['name'], 'Andreessen Horowitz')
-    self.assertEqual(int(c_['quality']), 10)
+          def test_startup_roles(self):
+            # Companies that Andreesseen Horowitz is tagged in
+            # https://angel.co/api/spec/startups#GET_startups_%3Aid_roles
+            id_ = 37820
+            direction_ = 'outgoing'
+            a16z_ = angel.get_startup_roles(id_, direction=direction_)
+            keys = sorted(['per_page', 'last_page', 'total', 'startup_roles', 'page'])
+            self.assertEqual(sorted(list(a16z_.iterkeys())), keys)
+            a_ = a16z_['startup_roles'][0]
+            self.assertTrue('startup' in a_)
+            c_ = a_['startup']
+            self.assertEqual(c_['angellist_url'], 'https://angel.co/andreessen-horowitz')
+            self.assertEqual(c_['company_url'], 'http://www.a16z.com/')
+            self.assertEqual(c_['high_concept'], ('Helping the greatest tech entrepreneurs'
+                                                                ' build the best tech companies'))
+            self.assertEqual(c_['name'], 'Andreessen Horowitz')
+            self.assertEqual(int(c_['quality']), 10)
 
-  def test_startup_comments(self):
-    id_ = ANGELLIST_ID
-    c_ = angel.get_startup_comments(id_)
-    comment_keys = sorted(['comment', 'created_at', 'id', 'user'])
-    self.assertEqual(type(c_), list)
-    if c_ and len(c_) > 0:
-      f_ = c_[0] # first comment
-      self.assertEqual(sorted(list(f_.iterkeys())), comment_keys)
-      # Need to change
-      # I do not know which order Angellist sends these comments
-      # If there does not a particular order exist, or the order does not
-      # depend on the comment created time
-      # Then the following test may not work and become meaningless
-      self.assertEqual(f_['comment'], ("AngelList is badass! Thank you guys, you are "
-                                      "changing the way companies get funded and that's awesome!"))
-      self.assertEqual(f_['created_at'], '2011-08-05T06:07:50Z')
-      self.assertEqual(int(f_['id']), 3800)
-      self.assertEqual(f_['user']['angellist_url'], 'https://angel.co/thomask')
-      self.assertEqual(f_['user']['bio'],
-        ('Founder of @angelpad, Ex-@Google Product Manager, Startup Advisor, '
-          'Angel Investor http://angelpad.org/b/scoble-thomas-korte-2012/'))
-      # Based on the assumption: followers will only increase
-      self.assertTrue(int(f_['user']['follower_count']) >= 11175)
-      self.assertEqual(int(f_['user']['id']), 111)
-      self.assertEqual(f_['user']['name'], 'Thomas Korte')
+          def test_startup_comments(self):
+            id_ = ANGELLIST_ID
+            c_ = angel.get_startup_comments(id_)
+            comment_keys = sorted(['comment', 'created_at', 'id', 'user'])
+            self.assertEqual(type(c_), list)
+            if c_ and len(c_) > 0:
+              f_ = c_[0] # first comment
+              self.assertEqual(sorted(list(f_.iterkeys())), comment_keys)
+              # Need to change
+              # I do not know which order Angellist sends these comments
+              # If there does not a particular order exist, or the order does not
+              # depend on the comment created time
+              # Then the following test may not work and become meaningless
+              self.assertEqual(f_['comment'], ("AngelList is badass! Thank you guys, you are "
+                                              "changing the way companies get funded and that's awesome!"))
+              self.assertEqual(f_['created_at'], '2011-08-05T06:07:50Z')
+              self.assertEqual(int(f_['id']), 3800)
+              self.assertEqual(f_['user']['angellist_url'], 'https://angel.co/thomask')
+              self.assertEqual(f_['user']['bio'],
+                ('Founder of @angelpad, Ex-@Google Product Manager, Startup Advisor, '
+                  'Angel Investor http://angelpad.org/b/scoble-thomas-korte-2012/'))
+              # Based on the assumption: followers will only increase
+              self.assertTrue(int(f_['user']['follower_count']) >= 11175)
+              self.assertEqual(int(f_['user']['id']), 111)
+              self.assertEqual(f_['user']['name'], 'Thomas Korte')
 
-  def test_startups_filtered_by(self, filter_='raising'):
-    expected_keys = sorted(['last_page', 'per_page', 'startups', 'total', 'page'])
-    s_ = angel.get_startups_filtered_by(filter_=filter_)
-    self.assertEqual(type(s_), dict)
-    self.assertEqual(sorted(list(s_.iterkeys())), expected_keys)
-    i_ = s_['startups'][0]
-    expected_keys = sorted(['status', 'crunchbase_url', 'fundraising',
-      'video_url', 'company_url', 'company_type', 'updated_at', 'quality',
-      'id', 'angellist_url', 'screenshots', 'follower_count', 'hidden',
-      'launch_date', 'markets', 'community_profile', 'product_desc',
-      'twitter_url', 'high_concept', 'facebook_url', 'locations', 'thumb_url',
-      'company_size', 'logo_url', 'name', 'created_at', 'linkedin_url',
-      'blog_url'])
-    self.assertEqual(sorted(list(i_.iterkeys())), expected_keys)
+          def test_startups_filtered_by(self, filter_='raising'):
+            expected_keys = sorted(['last_page', 'per_page', 'startups', 'total', 'page'])
+            s_ = angel.get_startups_filtered_by(filter_=filter_)
+            self.assertEqual(type(s_), dict)
+            self.assertEqual(sorted(list(s_.iterkeys())), expected_keys)
+            i_ = s_['startups'][0]
+            expected_keys = sorted(['status', 'crunchbase_url', 'fundraising',
+              'video_url', 'company_url', 'company_type', 'updated_at', 'quality',
+              'id', 'angellist_url', 'screenshots', 'follower_count', 'hidden',
+              'launch_date', 'markets', 'community_profile', 'product_desc',
+              'twitter_url', 'high_concept', 'facebook_url', 'locations', 'thumb_url',
+              'company_size', 'logo_url', 'name', 'created_at', 'linkedin_url',
+              'blog_url'])
+            self.assertEqual(sorted(list(i_.iterkeys())), expected_keys)
 
-  def test_startup_roles(self):
-    # Only Startup id
-    startup_id = ANGELLIST_ID
-    s_ = angel.get_startup_roles(startup_id=startup_id)
-    expected_keys = sorted(['per_page', 'last_page', 'total', 'startup_roles', 'page'])
-    self.assertEqual(type(s_), dict)
-    self.assertEqual(sorted(list(s_.iterkeys())), expected_keys)
-    self.assertEqual(type(s_['startup_roles']), list)
-    t_ = s_['startup_roles'][0]
-    e = sorted(['confirmed', 'ended_at', 'title', 'created_at', 'startup', 'tagged', 'role', 'started_at', 'id'])
-    self.assertEqual(e, sorted(list(t_.iterkeys())))
-    # Direction Test
-    direction = 'outgoing'
-    s_ = angel.get_startup_roles(startup_id=startup_id, direction=direction)
-    self.assertEqual(type(s_), dict)
-    self.assertEqual(sorted(list(s_.iterkeys())), expected_keys)
-    self.assertEqual(type(s_['startup_roles']), list)
-    t_ = s_['startup_roles'][0]
-    self.assertEqual(e, sorted(list(t_.iterkeys())))
+          def test_startup_roles(self):
+            # Only Startup id
+            startup_id = ANGELLIST_ID
+            s_ = angel.get_startup_roles(startup_id=startup_id)
+            expected_keys = sorted(['per_page', 'last_page', 'total', 'startup_roles', 'page'])
+            self.assertEqual(type(s_), dict)
+            self.assertEqual(sorted(list(s_.iterkeys())), expected_keys)
+            self.assertEqual(type(s_['startup_roles']), list)
+            t_ = s_['startup_roles'][0]
+            e = sorted(['confirmed', 'ended_at', 'title', 'created_at', 'startup', 'tagged', 'role', 'started_at', 'id'])
+            self.assertEqual(e, sorted(list(t_.iterkeys())))
+            # Direction Test
+            direction = 'outgoing'
+            s_ = angel.get_startup_roles(startup_id=startup_id, direction=direction)
+            self.assertEqual(type(s_), dict)
+            self.assertEqual(sorted(list(s_.iterkeys())), expected_keys)
+            self.assertEqual(type(s_['startup_roles']), list)
+            t_ = s_['startup_roles'][0]
+            self.assertEqual(e, sorted(list(t_.iterkeys())))
 
-    # Roles Test
-    s_ = angel.get_startup_roles(startup_id=startup_id, role='founder')
-    self.assertEqual(type(s_), dict)
-    self.assertEqual(sorted(list(s_.iterkeys())), expected_keys)
-    self.assertEqual(type(s_['startup_roles']), list)
-    t_ = s_['startup_roles'][0]
-    self.assertEqual(e, sorted(list(t_.iterkeys())))
-    s_ = angel.get_startup_roles(startup_id=startup_id, role='advisor')
-    self.assertEqual(type(s_), dict)
-    self.assertEqual(sorted(list(s_.iterkeys())), expected_keys)
-    self.assertEqual(type(s_['startup_roles']), list)
-    t_ = s_['startup_roles'][0]
-    self.assertEqual(e, sorted(list(t_.iterkeys())))
+            # Roles Test
+            s_ = angel.get_startup_roles(startup_id=startup_id, role='founder')
+            self.assertEqual(type(s_), dict)
+            self.assertEqual(sorted(list(s_.iterkeys())), expected_keys)
+            self.assertEqual(type(s_['startup_roles']), list)
+            t_ = s_['startup_roles'][0]
+            self.assertEqual(e, sorted(list(t_.iterkeys())))
+            s_ = angel.get_startup_roles(startup_id=startup_id, role='advisor')
+            self.assertEqual(type(s_), dict)
+            self.assertEqual(sorted(list(s_.iterkeys())), expected_keys)
+            self.assertEqual(type(s_['startup_roles']), list)
+            t_ = s_['startup_roles'][0]
+            self.assertEqual(e, sorted(list(t_.iterkeys())))
 
-    # User id test
-    s_ = angel.get_startup_roles(user_id=2)
-    self.assertEqual(type(s_), dict)
-    self.assertEqual(sorted(list(s_.iterkeys())), expected_keys)
-    self.assertEqual(type(s_['startup_roles']), list)
-    t_ = s_['startup_roles'][0]
-    self.assertEqual(e, sorted(list(t_.iterkeys())))
+            # User id test
+            s_ = angel.get_startup_roles(user_id=2)
+            self.assertEqual(type(s_), dict)
+            self.assertEqual(sorted(list(s_.iterkeys())), expected_keys)
+            self.assertEqual(type(s_['startup_roles']), list)
+            t_ = s_['startup_roles'][0]
+            self.assertEqual(e, sorted(list(t_.iterkeys())))
 
-  def test_startup_roles_deprecated(self, id_=2674):
-    expected_keys = sorted(['per_page', 'last_page', 'total', 'startup_roles', 'page'])
-    directions = ['incoming', 'outgoing']
-    for direction in directions:
-      r_ = angel.get_startup_roles_deprecated(id_, direction=direction)
-      self.assertEqual(type(r_), dict)
-      self.assertEqual(expected_keys, sorted(list(r_.iterkeys())))
-      roles_ = r_['startup_roles']
-      self.assertEqual(type(roles_), list)
-      p_ = roles_[0]
-      e = sorted(['confirmed', 'ended_at', 'title', 'created_at', 'startup', 'tagged', 'role', 'started_at', 'id'])
-      self.assertEqual(e, sorted(list(p_.iterkeys())))
+          def test_startup_roles_deprecated(self, id_=2674):
+            expected_keys = sorted(['per_page', 'last_page', 'total', 'startup_roles', 'page'])
+            directions = ['incoming', 'outgoing']
+            for direction in directions:
+              r_ = angel.get_startup_roles_deprecated(id_, direction=direction)
+              self.assertEqual(type(r_), dict)
+              self.assertEqual(expected_keys, sorted(list(r_.iterkeys())))
+              roles_ = r_['startup_roles']
+              self.assertEqual(type(roles_), list)
+              p_ = roles_[0]
+              e = sorted(['confirmed', 'ended_at', 'title', 'created_at', 'startup', 'tagged', 'role', 'started_at', 'id'])
+              self.assertEqual(e, sorted(list(p_.iterkeys())))
 
-  def test_status_updates(self, startup_id=ANGELLIST_ID):
-    expected_keys = sorted(['total', 'per_page', 'last_page', 'status_updates', 'page'])
-    u_ = angel.get_status_updates(startup_id)
-    self.assertEqual(type(u_), dict)
-    self.assertEqual(sorted(list(u_.iterkeys())), expected_keys)
-    up_ = u_['status_updates']
-    self.assertEqual(type(up_), list)
-    p_ = up_[0]
-    self.assertEqual(type(p_), dict)
-    e = sorted(['created_at', 'message', 'id'])
-    self.assertEqual(sorted(list(p_.iterkeys())), e)
+          def test_status_updates(self, startup_id=ANGELLIST_ID):
+            expected_keys = sorted(['total', 'per_page', 'last_page', 'status_updates', 'page'])
+            u_ = angel.get_status_updates(startup_id)
+            self.assertEqual(type(u_), dict)
+            self.assertEqual(sorted(list(u_.iterkeys())), expected_keys)
+            up_ = u_['status_updates']
+            self.assertEqual(type(up_), list)
+            p_ = up_[0]
+            self.assertEqual(type(p_), dict)
+            e = sorted(['created_at', 'message', 'id'])
+            self.assertEqual(sorted(list(p_.iterkeys())), e)
 
-  def test_tags(self, startup_id=1654):
-    expected_keys = sorted(['statistics', 'display_name', 'name', 'angellist_url', 'id', 'tag_type'])
-    t_ = angel.get_tags(startup_id)
-    self.assertEqual(type(t_), dict)
-    self.assertEqual(sorted(list(t_.iterkeys())), expected_keys)
-    self.assertEqual(type(t_['statistics']), dict)
-    self.assertEqual(sorted(list(t_['statistics'].iterkeys())), sorted(['all', 'direct']))
+          def test_tags(self, startup_id=1654):
+            expected_keys = sorted(['statistics', 'display_name', 'name', 'angellist_url', 'id', 'tag_type'])
+            t_ = angel.get_tags(startup_id)
+            self.assertEqual(type(t_), dict)
+            self.assertEqual(sorted(list(t_.iterkeys())), expected_keys)
+            self.assertEqual(type(t_['statistics']), dict)
+            self.assertEqual(sorted(list(t_['statistics'].iterkeys())), sorted(['all', 'direct']))
 
-  def test_tags_children(self, startup_id=1654):
-    expected_keys = sorted(['per_page', 'last_page', 'total', 'children', 'page'])
-    c_ = angel.get_tags_children(startup_id)
-    self.assertEqual(type(c_), dict)
-    self.assertEqual(sorted(list(c_.iterkeys())), expected_keys)
-    self.assertEqual(type(c_['children']), list)
-    self.assertEqual(type(c_['per_page']), int)
-    self.assertEqual(type(c_['last_page']), int)
-    self.assertEqual(type(c_['total']), int)
-    self.assertEqual(type(c_['page']), int)
+          def test_tags_children(self, startup_id=1654):
+            expected_keys = sorted(['per_page', 'last_page', 'total', 'children', 'page'])
+            c_ = angel.get_tags_children(startup_id)
+            self.assertEqual(type(c_), dict)
+            self.assertEqual(sorted(list(c_.iterkeys())), expected_keys)
+            self.assertEqual(type(c_['children']), list)
+            self.assertEqual(type(c_['per_page']), int)
+            self.assertEqual(type(c_['last_page']), int)
+            self.assertEqual(type(c_['total']), int)
+            self.assertEqual(type(c_['page']), int)
 
-  def test_tags_parents(self, startup_id=1688):
-    expected_keys = sorted(['per_page', 'last_page', 'total', 'parents', 'page'])
-    c_ = angel.get_tags_parents(startup_id)
-    self.assertEqual(type(c_), dict)
-    self.assertEqual(sorted(list(c_.iterkeys())), expected_keys)
-    self.assertEqual(type(c_['parents']), list)
-    self.assertEqual(type(c_['per_page']), int)
-    self.assertEqual(type(c_['last_page']), int)
-    self.assertEqual(type(c_['total']), int)
-    self.assertEqual(type(c_['page']), int)
+          def test_tags_parents(self, startup_id=1688):
+            expected_keys = sorted(['per_page', 'last_page', 'total', 'parents', 'page'])
+            c_ = angel.get_tags_parents(startup_id)
+            self.assertEqual(type(c_), dict)
+            self.assertEqual(sorted(list(c_.iterkeys())), expected_keys)
+            self.assertEqual(type(c_['parents']), list)
+            self.assertEqual(type(c_['per_page']), int)
+            self.assertEqual(type(c_['last_page']), int)
+            self.assertEqual(type(c_['total']), int)
+            self.assertEqual(type(c_['page']), int)
 
-  def test_tags_startups(self, startup_id=1688):
-    expected_keys = sorted(['per_page', 'last_page', 'total', 'startups', 'page'])
-    c_ = angel.get_tags_startups(startup_id)
-    self.assertEqual(type(c_), dict)
-    self.assertEqual(sorted(list(c_.iterkeys())), expected_keys)
-    self.assertEqual(type(c_['startups']), list)
-    self.assertEqual(type(c_['per_page']), int)
-    self.assertEqual(type(c_['last_page']), int)
-    self.assertEqual(type(c_['total']), int)
-    self.assertEqual(type(c_['page']), int)
+          def test_tags_startups(self, startup_id=1688):
+            expected_keys = sorted(['per_page', 'last_page', 'total', 'startups', 'page'])
+            c_ = angel.get_tags_startups(startup_id)
+            self.assertEqual(type(c_), dict)
+            self.assertEqual(sorted(list(c_.iterkeys())), expected_keys)
+            self.assertEqual(type(c_['startups']), list)
+            self.assertEqual(type(c_['per_page']), int)
+            self.assertEqual(type(c_['last_page']), int)
+            self.assertEqual(type(c_['total']), int)
+            self.assertEqual(type(c_['page']), int)
 
-  def test_tags_users(self, startup_id=1688):
-    expected_keys = sorted(['per_page', 'last_page', 'total', 'users', 'page'])
-    c_ = angel.get_tags_users(startup_id)
-    self.assertEqual(type(c_), dict)
-    self.assertEqual(sorted(list(c_.iterkeys())), expected_keys)
-    self.assertEqual(type(c_['users']), list)
-    self.assertEqual(type(c_['per_page']), int)
-    self.assertEqual(type(c_['last_page']), int)
-    self.assertEqual(type(c_['total']), int)
-    self.assertEqual(type(c_['page']), int)
+          def test_tags_users(self, startup_id=1688):
+            expected_keys = sorted(['per_page', 'last_page', 'total', 'users', 'page'])
+            c_ = angel.get_tags_users(startup_id)
+            self.assertEqual(type(c_), dict)
+            self.assertEqual(sorted(list(c_.iterkeys())), expected_keys)
+            self.assertEqual(type(c_['users']), list)
+            self.assertEqual(type(c_['per_page']), int)
+            self.assertEqual(type(c_['last_page']), int)
+            self.assertEqual(type(c_['total']), int)
+            self.assertEqual(type(c_['page']), int)
 
-  def test_reviews(self, user_id=155):
-    r_ = angel.get_reviews(user_id)
-    expected_keys = sorted(['reviews', 'last_page', 'per_page', 'total', 'page', 'total_positive'])
-    self.assertEqual(type(r_), dict)
-    reviews_ = r_['reviews']
-    self.assertEqual(type(reviews_), list)
-    e = sorted(['relationship_to_reviewer', 'rating', 'created_at', 'note', 'reviewer', 'id'])
-    self.assertEqual(sorted(list(reviews_[0].iterkeys())), e)
+          def test_reviews(self, user_id=155):
+            r_ = angel.get_reviews(user_id)
+            expected_keys = sorted(['reviews', 'last_page', 'per_page', 'total', 'page', 'total_positive'])
+            self.assertEqual(type(r_), dict)
+            reviews_ = r_['reviews']
+            self.assertEqual(type(reviews_), list)
+            e = sorted(['relationship_to_reviewer', 'rating', 'created_at', 'note', 'reviewer', 'id'])
+            self.assertEqual(sorted(list(reviews_[0].iterkeys())), e)
 
-  def test_review_id(self, id_=1098):
-    r_id_ = angel.get_review_id(id_)
-    expected_keys = sorted(['relationship_to_reviewer', 'rating', 'created_at', 'note', 'reviewer', 'id'])
-    self.assertEqual(type(r_id_ ), dict)
-    self.assertEqual(sorted(list(r_id_.iterkeys())), expected_keys)
-    self.assertEqual(type(r_id_['created_at']), unicode)
-    self.assertEqual(type(r_id_['id']) ,int)
-    self.assertEqual(type(r_id_['note']), unicode)
-    self.assertEqual(type(r_id_['rating']), int)
-    self.assertEqual(type(r_id_['relationship_to_reviewer']), dict)
+          def test_review_id(self, id_=1098):
+            r_id_ = angel.get_review_id(id_)
+            expected_keys = sorted(['relationship_to_reviewer', 'rating', 'created_at', 'note', 'reviewer', 'id'])
+            self.assertEqual(type(r_id_ ), dict)
+            self.assertEqual(sorted(list(r_id_.iterkeys())), expected_keys)
+            self.assertEqual(type(r_id_['created_at']), unicode)
+            self.assertEqual(type(r_id_['id']) ,int)
+            self.assertEqual(type(r_id_['note']), unicode)
+            self.assertEqual(type(r_id_['rating']), int)
+            self.assertEqual(type(r_id_['relationship_to_reviewer']), dict)
 
-  def test_feeds(self):
-    f_ = angel.get_feeds()
-    expected_keys = sorted(['feed', 'per_page', 'last_page', 'total', 'page'])
-    self.assertEqual(sorted(list(f_.iterkeys())), expected_keys)
-    f_elem = f_['feed'][0]
-    e_ = sorted(['description', 'extra', 'timestamp', 'comments', 'actor', 'item', 'likes', 'text', 'promoted_by', 'id', 'target'])
-    self.assertEqual(e_, sorted(list(f_elem.iterkeys())))
-    self.assertEqual(type(f_elem['description']), unicode)
-    self.assertEqual(type(f_elem['timestamp']), unicode)
-    self.assertEqual(type(f_elem['id']), unicode)
-    self.assertEqual(type(f_elem['comments']), int)
-    self.assertEqual(type(f_elem['likes']), int)
-    #print f_elem['likes']
-    #print f_elem['actor']
-    #print "-----"
-    self.assertEqual(type(f_elem['actor']), dict)
-    self.assertEqual(type(f_elem['item']), dict)
-    f_ = angel.get_feeds(personalized=True)
-    expected_keys = sorted(['feed', 'per_page', 'last_page', 'total', 'page'])
-    self.assertEqual(sorted(list(f_.iterkeys())), expected_keys)
-    f_elem = f_['feed'][0]
-    e_ = sorted(['description', 'extra', 'timestamp', 'comments', 'actor', 'item', 'likes', 'text', 'promoted_by', 'id', 'target'])
-    self.assertEqual(e_, sorted(list(f_elem.iterkeys())))
-    self.assertEqual(type(f_elem['description']), unicode)
-    self.assertEqual(type(f_elem['timestamp']), unicode)
-    self.assertEqual(type(f_elem['id']), unicode)
-    self.assertEqual(type(f_elem['comments']), int)
-    self.assertEqual(type(f_elem['likes']), int)
-    self.assertEqual(type(f_elem['actor']), dict)
-    self.assertEqual(type(f_elem['item']), dict)
-    epoch = '1388890909' # May 1 2014
-    f_ = angel.get_feeds(since=epoch)
-    expected_keys = sorted(['feed', 'cursor',])
-    self.assertEqual(sorted(list(f_.iterkeys())), expected_keys)
-    f_elem = f_['feed'][0]
-    e_ = sorted(['description', 'extra', 'timestamp', 'comments', 'actor', 'item', 'likes', 'text', 'promoted_by', 'id', 'target'])
-    self.assertEqual(e_, sorted(list(f_elem.iterkeys())))
-    self.assertEqual(type(f_elem['description']), unicode)
-    self.assertEqual(type(f_elem['timestamp']), unicode)
-    self.assertEqual(type(f_elem['id']), unicode)
-    self.assertEqual(type(f_elem['comments']), int)
-    self.assertEqual(type(f_elem['likes']), int)
-    #self.assertEqual(type(f_elem['actor']), dict)
-    self.assertEqual(type(f_elem['item']), dict)
+          def test_feeds(self):
+            f_ = angel.get_feeds()
+            expected_keys = sorted(['feed', 'per_page', 'last_page', 'total', 'page'])
+            self.assertEqual(sorted(list(f_.iterkeys())), expected_keys)
+            f_elem = f_['feed'][0]
+            e_ = sorted(['description', 'extra', 'timestamp', 'comments', 'actor', 'item', 'likes', 'text', 'promoted_by', 'id', 'target'])
+            self.assertEqual(e_, sorted(list(f_elem.iterkeys())))
+            self.assertEqual(type(f_elem['description']), unicode)
+            self.assertEqual(type(f_elem['timestamp']), unicode)
+            self.assertEqual(type(f_elem['id']), unicode)
+            self.assertEqual(type(f_elem['comments']), int)
+            self.assertEqual(type(f_elem['likes']), int)
+            #print f_elem['likes']
+            #print f_elem['actor']
+            #print "-----"
+            self.assertEqual(type(f_elem['actor']), dict)
+            self.assertEqual(type(f_elem['item']), dict)
+            f_ = angel.get_feeds(personalized=True)
+            expected_keys = sorted(['feed', 'per_page', 'last_page', 'total', 'page'])
+            self.assertEqual(sorted(list(f_.iterkeys())), expected_keys)
+            f_elem = f_['feed'][0]
+            e_ = sorted(['description', 'extra', 'timestamp', 'comments', 'actor', 'item', 'likes', 'text', 'promoted_by', 'id', 'target'])
+            self.assertEqual(e_, sorted(list(f_elem.iterkeys())))
+            self.assertEqual(type(f_elem['description']), unicode)
+            self.assertEqual(type(f_elem['timestamp']), unicode)
+            self.assertEqual(type(f_elem['id']), unicode)
+            self.assertEqual(type(f_elem['comments']), int)
+            self.assertEqual(type(f_elem['likes']), int)
+            self.assertEqual(type(f_elem['actor']), dict)
+            self.assertEqual(type(f_elem['item']), dict)
+            epoch = '1388890909' # May 1 2014
+            f_ = angel.get_feeds(since=epoch)
+            expected_keys = sorted(['feed', 'cursor',])
+            self.assertEqual(sorted(list(f_.iterkeys())), expected_keys)
+            f_elem = f_['feed'][0]
+            e_ = sorted(['description', 'extra', 'timestamp', 'comments', 'actor', 'item', 'likes', 'text', 'promoted_by', 'id', 'target'])
+            self.assertEqual(e_, sorted(list(f_elem.iterkeys())))
+            self.assertEqual(type(f_elem['description']), unicode)
+            self.assertEqual(type(f_elem['timestamp']), unicode)
+            self.assertEqual(type(f_elem['id']), unicode)
+            self.assertEqual(type(f_elem['comments']), int)
+            self.assertEqual(type(f_elem['likes']), int)
+            #self.assertEqual(type(f_elem['actor']), dict)
+            self.assertEqual(type(f_elem['item']), dict)
 
-  def test_comments(self):
-    c_ = angel.get_comments('Startup', ANGELLIST_ID)
-    self.assertEqual(type(c_), list)
-    d_ = c_[0]
-    expected_keys = sorted(['comment', 'created_at', 'id', 'user'])
-    self.assertEqual(expected_keys, sorted(list(d_.iterkeys())))
-    self.assertEqual(type(d_['comment']), unicode)
-    self.assertEqual(type(d_['created_at']), unicode)
-    self.assertEqual(type(d_['id']), int)
-    self.assertEqual(type(d_['user']), dict)
+          def test_comments(self):
+            c_ = angel.get_comments('Startup', ANGELLIST_ID)
+            self.assertEqual(type(c_), list)
+            d_ = c_[0]
+            expected_keys = sorted(['comment', 'created_at', 'id', 'user'])
+            self.assertEqual(expected_keys, sorted(list(d_.iterkeys())))
+            self.assertEqual(type(d_['comment']), unicode)
+            self.assertEqual(type(d_['created_at']), unicode)
+            self.assertEqual(type(d_['id']), int)
+            self.assertEqual(type(d_['user']), dict)
 
   def test_follows_relationship(self):
     r_ = angel.get_follows_relationship(671, 'User', 2)
@@ -477,8 +477,6 @@ class AngelListTestCase(unittest.TestCase):
     direction = 'following'
     user_ids = [2, 155]
     p_ = angel.get_paths(user_ids=user_ids, direction=direction)
-    print p_
-    #print "-----J--"
     expected_keys = sorted([u'2', u'155'])
     self.assertEqual(expected_keys, sorted(list(p_.iterkeys())))
     self.assertEqual(type(p_['2']), list)

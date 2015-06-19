@@ -212,7 +212,7 @@ class AngelList(object):
                                                     startup_ids=startup_ids)
     if not direction is None:
       paths_url += '&' + _DIRECTION_SUFFIX.format(direction=direction)
-    print path_url
+    print paths_url
     return _get_request(paths_url)
 
   def get_press(self, startup_id):
