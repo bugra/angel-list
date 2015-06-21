@@ -46,3 +46,8 @@ docs/_build/
 # Notebook Directory
 notebooks/
 
+# IDE baggage
+*.swp
+*.swn
+*.swo
+*.swm
