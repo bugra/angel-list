@@ -35,7 +35,7 @@ _STARTUP_C = '{c_api}/{api}/startups/{id_}/comments?access_token={at}'
 _TAGS = '{c_api}/{api}/tags/{id_}/?access_token={at}'
 _TAGS_CHILDREN = '{c_api}/{api}/tags/{id_}/children?access_token={at}'
 _TAGS_PARENTS = '{c_api}/{api}/tags/{id_}/parents?access_token={at}'
-_TAGS_STARTUPS = '{c_api}/{api}/tags/{id_}/startups'#?access_token={at}'
+_TAGS_STARTUPS = '{c_api}/{api}/tags/{id_}/startups'
 _TAGS_USERS = '{c_api}/{api}/tags/{id_}/users?access_token={at}'
 _STATUS_U = '{c_api}/{api}/status_updates?startup_id={startup_id}?access_token={at}'
 _REVIEWS_USER = '{c_api}/{api}/reviews?user_id={user_id}?access_token={at}'
@@ -45,11 +45,10 @@ _SELF = '{c_api}/{api}/me?access_token={at}'
 _USERS = '{c_api}/{api}/users/{id_}?access_token={at}'
 _USERS_R = '{c_api}/{api}/users/{id_}/roles?access_token={at}'
 _USERS_S = '{c_api}/{api}/users/search?access_token={at}'
-_USERS_BATCH = '{c_api}/{api}/users/batch?ids={ids}'#?access_token={at}'
+_USERS_BATCH = '{c_api}/{api}/users/batch?ids={ids}'
 _S_SEARCH = '{c_api}/{api}/search?query={query}'
 _SLUG_SEARCH = '{c_api}/{api}/search/slugs?query={slug}'
 _COM = '{c_api}/{api}/comments?commentable_type={ct}&commentable_id={id_}'
-#_JOBS = '{c_api}/{api}/jobs?page={pg}'
 _JOBS = '{c_api}/{api}/jobs?page={pg}&access_token={at}'
 _JOBS_ID = '{c_api}/{api}/jobs/{id_}'
 _STARTUP_ID_JOBS = '{c_api}/{api}/startups/{id_}/jobs'
@@ -57,7 +56,6 @@ _TAG_ID_JOBS = '{c_api}/{api}/tags/{id_}/jobs?page={pg}&access_token={at}'
 _LIKES = '{c_api}/{api}/likes?likable_type={lt}&likable_id={li}'
 _MESSAGES = '{c_api}/{api}/messages?access_token={at}'
 _MESSAGES_THREAD = '{c_api}/{api}/messages/{id_}?access_token={at}'
-#_PATHS = '{c_api}/{api}/paths?user_ids={user_ids}&direction={direction}&access_token={at}'
 _PATHS = '{c_api}/{api}/paths?access_token={at}'
 _PRESS = '{c_api}/{api}/press?access_token={at}&startup_id={id_}'
 _PRESS_BY_ID = '{c_api}/{api}/press/{id_}?access_token={at}'
@@ -201,9 +199,6 @@ class AngelList(object):
 
     paths_url = _PATHS.format(c_api=_C_API_BEGINNING,
                                       api=_API_VERSION,
-                                      #startup_ids=startup_ids,
-				     #user_ids=user_ids,
-				      #direction=direction,
                                       at=self.access_token)
     if not user_ids is None:
       paths_url += '&' + _USER_IDS_SUFFIX.format(user_ids=user_ids)

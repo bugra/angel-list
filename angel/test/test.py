@@ -410,9 +410,6 @@ class AngelListTestCase(unittest.TestCase):
     self.assertEqual(type(f_elem['id']), unicode)
     self.assertEqual(type(f_elem['comments']), int)
     self.assertEqual(type(f_elem['likes']), int)
-    #print f_elem['likes']
-    #print f_elem['actor']
-    #print "-----"
     self.assertEqual(type(f_elem['actor']), dict)
     self.assertEqual(type(f_elem['item']), dict)
     f_ = angel.get_feeds(personalized=True)
