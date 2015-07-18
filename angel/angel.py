@@ -21,14 +21,14 @@ _FOLLOWERS = '{c_api}/{api}/users/{id_}/followers?access_token={at}'
 _FOLLOWER_IDS = '{c_api}/{api}/users/{id_}/followers/ids?access_token={at}'
 _FOLLOWING = '{c_api}/{api}/users/{id_}/following?access_token={at}'
 _FOLLOWING_IDS = '{c_api}/{api}/users/{id_}/following/ids?access_token={at}'
-_FOLLOWS_R = '{c_api}/{api}/follows/relationship?source_id={s}&target_type={t}&target_id={t_id}?access_token={at}'
+_FOLLOWS_R = '{c_api}/{api}/follows/relationship?source_id={s}&target_type={t}&target_id={t_id}&access_token={at}'
 _FOLLOWS_B = '{c_api}/{api}/follows/batch?ids={batch_ids}'
 
 _FEEDS = '{c_api}/{api}/feed?access_token{at}'
 _STARTUP = '{c_api}/{api}/startups/{id_}?access_token={at}'
 _STARTUP_F = '{c_api}/{api}/startups/{id_}/followers?access_token={at}'
 _STARTUP_S = '{c_api}/{api}/startups/search?access_token={at}&slug={slug}'
-_STARTUP_R = '{c_api}/{api}/startup_roles?v=1'
+_STARTUP_R = '{c_api}/{api}/startup_roles?v=1&access_token={at}'
 _STARTUP_R_DEPRECATED = '{c_api}/{api}/startups/{id_}/roles?direction={direction}&access_token={at}'
 _STARTUP_RAISING = '{c_api}/{api}/startups?filter={filter_}&access_token={at}'
 _STARTUP_C = '{c_api}/{api}/startups/{id_}/comments?access_token={at}'
@@ -38,7 +38,7 @@ _TAGS_PARENTS = '{c_api}/{api}/tags/{id_}/parents?access_token={at}'
 _TAGS_STARTUPS = '{c_api}/{api}/tags/{id_}/startups?access_token={at}'
 _TAGS_USERS = '{c_api}/{api}/tags/{id_}/users?access_token={at}'
 _STATUS_U = '{c_api}/{api}/status_updates?startup_id={startup_id}&access_token={at}'
-_REVIEWS_USER = '{c_api}/{api}/reviews?user_id={user_id}?access_token={at}'
+_REVIEWS_USER = '{c_api}/{api}/reviews?user_id={user_id}&access_token={at}'
 _REVIEW_ID = '{c_api}/{api}/reviews/{id_}?access_token={at}'
 
 _SELF = '{c_api}/{api}/me?access_token={at}'
@@ -46,8 +46,8 @@ _USERS = '{c_api}/{api}/users/{id_}?access_token={at}'
 _USERS_R = '{c_api}/{api}/users/{id_}/roles?access_token={at}'
 _USERS_S = '{c_api}/{api}/users/search?access_token={at}'
 _USERS_BATCH = '{c_api}/{api}/users/batch?ids={ids}&access_token={at}'
-_S_SEARCH = '{c_api}/{api}/search?query={query}'
-_SLUG_SEARCH = '{c_api}/{api}/search/slugs?query={slug}'
+_S_SEARCH = '{c_api}/{api}/search?query={query}&access_token={at}'
+_SLUG_SEARCH = '{c_api}/{api}/search/slugs?query={slug}&access_token={at}'
 _COM = '{c_api}/{api}/comments?commentable_type={ct}&commentable_id={id_}'
 _JOBS = '{c_api}/{api}/jobs?page={pg}&access_token={at}'
 _JOBS_ID = '{c_api}/{api}/jobs/{id_}'
@@ -419,7 +419,8 @@ class AngelList(object):
     if user_id is None and startup_id is None:
       raise Exception("You need to provide at least one parameter")
     url = _STARTUP_R.format(c_api=_C_API_BEGINNING,
-                                          api=_API_VERSION)
+                                          api=_API_VERSION,
+                                          at=self.access_token)
     if user_id is not None:
       url += '&user_id=' + str(user_id)
     if startup_id is not None:
@@ -461,7 +462,8 @@ class AngelList(object):
     """
     return _get_request(_SLUG_SEARCH.format(c_api=_C_API_BEGINNING,
                                             api=_API_VERSION,
-                                            slug=_format_query(slug)))
+                                            slug=_format_query(slug),
+                                            at=self.access_token))
 
 
   def get_search(self, query, type_=None):
@@ -470,7 +472,8 @@ class AngelList(object):
     """
     search_url = _S_SEARCH.format(c_api=_C_API_BEGINNING,
                                   api=_API_VERSION,
-                                  query=_format_query(query))
+                                  query=_format_query(query),
+                                  at=self.access_token)
     if type_ is not None:
       search_url + _TYPE_SUFFIX.format(type_=type_)
     return _get_request(search_url)
