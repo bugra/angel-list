@@ -22,7 +22,7 @@ _FOLLOWER_IDS = '{c_api}/{api}/users/{id_}/followers/ids?access_token={at}'
 _FOLLOWING = '{c_api}/{api}/users/{id_}/following?access_token={at}'
 _FOLLOWING_IDS = '{c_api}/{api}/users/{id_}/following/ids?access_token={at}'
 _FOLLOWS_R = '{c_api}/{api}/follows/relationship?source_id={s}&target_type={t}&target_id={t_id}&access_token={at}'
-_FOLLOWS_B = '{c_api}/{api}/follows/batch?ids={batch_ids}'
+_FOLLOWS_B = '{c_api}/{api}/follows/batch?ids={batch_ids}&access_token={at}'
 
 _FEEDS = '{c_api}/{api}/feed?access_token{at}'
 _STARTUP = '{c_api}/{api}/startups/{id_}?access_token={at}'
@@ -48,7 +48,7 @@ _USERS_S = '{c_api}/{api}/users/search?access_token={at}'
 _USERS_BATCH = '{c_api}/{api}/users/batch?ids={ids}&access_token={at}'
 _S_SEARCH = '{c_api}/{api}/search?query={query}&access_token={at}'
 _SLUG_SEARCH = '{c_api}/{api}/search/slugs?query={slug}&access_token={at}'
-_COM = '{c_api}/{api}/comments?commentable_type={ct}&commentable_id={id_}'
+_COM = '{c_api}/{api}/comments?commentable_type={ct}&commentable_id={id_}&access_token={at}'
 _JOBS = '{c_api}/{api}/jobs?page={pg}&access_token={at}'
 _JOBS_ID = '{c_api}/{api}/jobs/{id_}'
 _STARTUP_ID_JOBS = '{c_api}/{api}/startups/{id_}/jobs'
@@ -342,7 +342,8 @@ class AngelList(object):
   def get_follows_batch(self, batch_ids):
     return _get_request(_FOLLOWS_B.format(c_api=_C_API_BEGINNING,
                                                                api=_API_VERSION,
-                                                               batch_ids=','.join(batch_ids)))
+                                                               batch_ids=','.join(batch_ids),
+                                                               at=self.access_token))
 
   def get_startup_followers(self, id_):
     return _get_request(_STARTUP_F.format(c_api=_C_API_BEGINNING,
