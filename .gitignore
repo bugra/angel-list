@@ -51,3 +51,6 @@ notebooks/
 *.swn
 *.swo
 *.swm
+
+# stop tracking person dets
+.config.py
