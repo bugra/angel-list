@@ -185,7 +185,7 @@ class AngelListTestCase(unittest.TestCase):
       self.assertEqual(sorted(list(m_.iterkeys())), expected_message_keys)
 
   def test_press_id(self):
-    expected_keys = sorted(['title', 'url', 'created_at', 'updated_at', 'id', 'snippet', 'owner_type', 'posted_at', 'owner_id'])
+    expected_keys = sorted(['flags','image_url','title', 'url', 'created_at', 'updated_at', 'id', 'snippet', 'owner_type', 'posted_at', 'owner_id'])
     p_ = angel.get_press_by_id(990)
     self.assertEqual(sorted(list(p_.iterkeys())), expected_keys)
     self.assertEqual(int(p_['id']), 990)
