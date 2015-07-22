@@ -24,7 +24,6 @@ _FOLLOWING_IDS = '{c_api}/{api}/users/{id_}/following/ids?access_token={at}'
 _FOLLOWS_R = '{c_api}/{api}/follows/relationship?source_id={s}&target_type={t}&target_id={t_id}&access_token={at}'
 _FOLLOWS_B = '{c_api}/{api}/follows/batch?ids={batch_ids}&access_token={at}'
 
-_FEEDS = '{c_api}/{api}/feed/?access_token={at}'
 _STARTUP = '{c_api}/{api}/startups/{id_}?access_token={at}'
 _STARTUP_F = '{c_api}/{api}/startups/{id_}/followers?access_token={at}'
 _STARTUP_S = '{c_api}/{api}/startups/search?access_token={at}&slug={slug}'
@@ -64,8 +63,6 @@ _RESERVATIONS_ID = '{c_api}/{api}/reservations/{id_}?access_token={at}'
 _ACCREDIATION = '{c_api}/{api}/accrediation?access_token={at}'
 _MD5 = '&md5={md5}'
 
-_PERSONALIZED_SUFFIX = '&personalized=1'
-_SINCE_SUFFIX = '&since={since}'
 _TYPE_SUFFIX = '&type={type_}'
 _USER_IDS_SUFFIX = 'user_ids={user_ids}'
 _STARTUP_IDS_SUFFIX = 'startup_ids={startup_ids}'
@@ -292,21 +289,6 @@ class AngelList(object):
     return _get_request(_SELF.format(c_api=_C_API_BEGINNING,
                                              api=_API_VERSION,
                                              at=self.access_token))
-
-  def get_feeds(self, personalized=False, since=None):
-    """
-    personalized: Feeds for your user
-    since: unix timestamp, brings feeds from that time
-    """
-    feeds_url = _FEEDS.format(c_api=_C_API_BEGINNING,
-                                              api=_API_VERSION,
-                                              at=self.access_token)
-    if personalized:
-      feeds_url += _PERSONALIZED_SUFFIX
-    if since is not None:
-      feeds_url += _SINCE_SUFFIX.format(since=since)
-    return _get_request(feeds_url)
-
   def get_followers(self, id_):
     return _get_request(_FOLLOWERS.format(c_api=_C_API_BEGINNING,
                                                   api=_API_VERSION,
