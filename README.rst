@@ -3,8 +3,8 @@ Python API for Angellist
 .. image:: http://img.shields.io/pypi/v/angel.svg?style=flat
     :target: https://pypi.python.org/pypi/angel
 
-.. image:: http://img.shields.io/travis/bugra/angel-list.svg?style=flat
-    :target: https://travis-ci.org/bugra/angel-list
+.. image:: http://jenkins.jarenglover.com/job/angel-list/badge/icon
+    :target: http://jenkins.jarenglover.com/job/angel-list
 
 .. image:: http://img.shields.io/pypi/dm/angel.svg?style=flat
     :target: https://pypi.python.org/pypi/angel
