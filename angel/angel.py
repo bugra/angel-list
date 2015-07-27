@@ -28,7 +28,6 @@ _STARTUP = '{c_api}/{api}/startups/{id_}?access_token={at}'
 _STARTUP_F = '{c_api}/{api}/startups/{id_}/followers?access_token={at}'
 _STARTUP_S = '{c_api}/{api}/startups/search?access_token={at}&slug={slug}'
 _STARTUP_R = '{c_api}/{api}/startup_roles?v=1&access_token={at}'
-_STARTUP_R_DEPRECATED = '{c_api}/{api}/startups/{id_}/roles?direction={direction}&access_token={at}'
 _STARTUP_RAISING = '{c_api}/{api}/startups?filter={filter_}&access_token={at}'
 _STARTUP_C = '{c_api}/{api}/startups/{id_}/comments?access_token={at}'
 _TAGS = '{c_api}/{api}/tags/{id_}/?access_token={at}'
@@ -380,16 +379,6 @@ class AngelList(object):
                                         api=_API_VERSION,
                                         id_=id_,
                                         at=self.access_token))
-
-  def get_startup_roles_deprecated(self, id_, direction='incoming'):
-    """ Startup roles
-        Will be deprecated for the next version(2.x) api
-    """
-    return _get_request(_STARTUP_R_DEPRECATED.format(c_api=_C_API_BEGINNING,
-                                                                                    api=_API_VERSION,
-                                                                                    id_=id_,
-                                                                                    direction=direction,
-                                                                                    at=self.access_token))
 
   def get_startup_roles(self, user_id=None, startup_id=None, role=None, direction='incoming'):
     """
