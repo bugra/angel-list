@@ -119,8 +119,6 @@ class AngelListTestCase(unittest.TestCase):
             # Test two pages
             for pg in [1, 2]:
               jobs_ = angel.get_jobs(page=pg)
-              #print json.dumps(jobs_, indent=4, sort_keys=True)
-              #sys.exit(3)  
               expected_job_keys = sorted(['per_page', 'last_page', 'total', 'jobs', 'page'])
               self.assertEqual(type(jobs_), dict)
               self.assertEqual(expected_job_keys, sorted(list(jobs_.iterkeys())))
