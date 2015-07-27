@@ -300,19 +300,6 @@ class AngelListTestCase(unittest.TestCase):
     t_ = s_['startup_roles'][0]
     self.assertEqual(e, sorted(list(t_.iterkeys())))
 
-  def test_startup_roles_deprecated(self, id_=2674):
-    expected_keys = sorted(['per_page', 'last_page', 'total', 'startup_roles', 'page'])
-    directions = ['incoming', 'outgoing']
-    for direction in directions:
-      r_ = angel.get_startup_roles_deprecated(id_, direction=direction)
-      self.assertEqual(type(r_), dict)
-      self.assertEqual(expected_keys, sorted(list(r_.iterkeys())))
-      roles_ = r_['startup_roles']
-      self.assertEqual(type(roles_), list)
-      p_ = roles_[0]
-      e = sorted(['confirmed', 'ended_at', 'title', 'created_at', 'startup', 'tagged', 'role', 'started_at', 'id'])
-      self.assertEqual(e, sorted(list(p_.iterkeys())))
-
   def test_status_updates(self, startup_id=ANGELLIST_ID):
     expected_keys = sorted(['total', 'per_page', 'last_page', 'status_updates', 'page'])
     u_ = angel.get_status_updates(startup_id)
