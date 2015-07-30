@@ -21,38 +21,36 @@ _FOLLOWERS = '{c_api}/{api}/users/{id_}/followers?access_token={at}'
 _FOLLOWER_IDS = '{c_api}/{api}/users/{id_}/followers/ids?access_token={at}'
 _FOLLOWING = '{c_api}/{api}/users/{id_}/following?access_token={at}'
 _FOLLOWING_IDS = '{c_api}/{api}/users/{id_}/following/ids?access_token={at}'
-_FOLLOWS_R = '{c_api}/{api}/follows/relationship?source_id={s}&target_type={t}&target_id={t_id}?access_token={at}'
-_FOLLOWS_B = '{c_api}/{api}/follows/batch?ids={batch_ids}'
+_FOLLOWS_R = '{c_api}/{api}/follows/relationship?source_id={s}&target_type={t}&target_id={t_id}&access_token={at}'
+_FOLLOWS_B = '{c_api}/{api}/follows/batch?ids={batch_ids}&access_token={at}'
 
-_FEEDS = '{c_api}/{api}/feed?access_token{at}'
 _STARTUP = '{c_api}/{api}/startups/{id_}?access_token={at}'
 _STARTUP_F = '{c_api}/{api}/startups/{id_}/followers?access_token={at}'
 _STARTUP_S = '{c_api}/{api}/startups/search?access_token={at}&slug={slug}'
-_STARTUP_R = '{c_api}/{api}/startup_roles?v=1'
-_STARTUP_R_DEPRECATED = '{c_api}/{api}/startups/{id_}/roles?direction={direction}?access_token={at}'
-_STARTUP_RAISING = '{c_api}/{api}/startups?filter={filter_}'
+_STARTUP_R = '{c_api}/{api}/startup_roles?v=1&access_token={at}'
+_STARTUP_RAISING = '{c_api}/{api}/startups?filter={filter_}&access_token={at}'
 _STARTUP_C = '{c_api}/{api}/startups/{id_}/comments?access_token={at}'
 _TAGS = '{c_api}/{api}/tags/{id_}/?access_token={at}'
 _TAGS_CHILDREN = '{c_api}/{api}/tags/{id_}/children?access_token={at}'
 _TAGS_PARENTS = '{c_api}/{api}/tags/{id_}/parents?access_token={at}'
-_TAGS_STARTUPS = '{c_api}/{api}/tags/{id_}/startups'#?access_token={at}'
+_TAGS_STARTUPS = '{c_api}/{api}/tags/{id_}/startups?access_token={at}'
 _TAGS_USERS = '{c_api}/{api}/tags/{id_}/users?access_token={at}'
-_STATUS_U = '{c_api}/{api}/status_updates?startup_id={startup_id}?access_token={at}'
-_REVIEWS_USER = '{c_api}/{api}/reviews?user_id={user_id}?access_token={at}'
+_STATUS_U = '{c_api}/{api}/status_updates?startup_id={startup_id}&access_token={at}'
+_REVIEWS_USER = '{c_api}/{api}/reviews?user_id={user_id}&access_token={at}'
 _REVIEW_ID = '{c_api}/{api}/reviews/{id_}?access_token={at}'
 
 _SELF = '{c_api}/{api}/me?access_token={at}'
 _USERS = '{c_api}/{api}/users/{id_}?access_token={at}'
 _USERS_R = '{c_api}/{api}/users/{id_}/roles?access_token={at}'
 _USERS_S = '{c_api}/{api}/users/search?access_token={at}'
-_USERS_BATCH = '{c_api}/{api}/users/batch?ids={ids}'#?access_token={at}'
-_S_SEARCH = '{c_api}/{api}/search?query={query}'
-_SLUG_SEARCH = '{c_api}/{api}/search/slugs?query={slug}'
-_COM = '{c_api}/{api}/comments?commentable_type={ct}&commentable_id={id_}'
-_JOBS = '{c_api}/{api}/jobs?page={pg}'
+_USERS_BATCH = '{c_api}/{api}/users/batch?ids={ids}&access_token={at}'
+_S_SEARCH = '{c_api}/{api}/search?query={query}&access_token={at}'
+_SLUG_SEARCH = '{c_api}/{api}/search/slugs?query={slug}&access_token={at}'
+_COM = '{c_api}/{api}/comments?commentable_type={ct}&commentable_id={id_}&access_token={at}'
+_JOBS = '{c_api}/{api}/jobs?page={pg}&access_token={at}'
 _JOBS_ID = '{c_api}/{api}/jobs/{id_}'
 _STARTUP_ID_JOBS = '{c_api}/{api}/startups/{id_}/jobs'
-_TAG_ID_JOBS = '{c_api}/{api}/tags/{id_}/jobs'
+_TAG_ID_JOBS = '{c_api}/{api}/tags/{id_}/jobs?page={pg}&access_token={at}'
 _LIKES = '{c_api}/{api}/likes?likable_type={lt}&likable_id={li}'
 _MESSAGES = '{c_api}/{api}/messages?access_token={at}'
 _MESSAGES_THREAD = '{c_api}/{api}/messages/{id_}?access_token={at}'
@@ -64,8 +62,6 @@ _RESERVATIONS_ID = '{c_api}/{api}/reservations/{id_}?access_token={at}'
 _ACCREDIATION = '{c_api}/{api}/accrediation?access_token={at}'
 _MD5 = '&md5={md5}'
 
-_PERSONALIZED_SUFFIX = '?personalized=1'
-_SINCE_SUFFIX = '&since={since}'
 _TYPE_SUFFIX = '&type={type_}'
 _USER_IDS_SUFFIX = 'user_ids={user_ids}'
 _STARTUP_IDS_SUFFIX = 'startup_ids={startup_ids}'
@@ -133,7 +129,7 @@ class AngelList(object):
                                                         id_=id_,
                                                         at=self.access_token))
 
-  def get_tag_jobs(self, id_):
+  def get_tag_jobs(self, id_,page=1):
     url = _TAG_ID_JOBS.format(c_api=_C_API_BEGINNING,
                                                     api=_API_VERSION,
                                                     id_=id_)
@@ -274,7 +270,8 @@ class AngelList(object):
     ids_ = ','.join(ids)
     url = _USERS_BATCH.format(c_api=_C_API_BEGINNING,
                                               api=_API_VERSION,
-                                              ids=ids_)
+                                              ids=ids_,
+					      at=self.access_token)
     return _get_request(url)
 
   # TODO
@@ -291,21 +288,6 @@ class AngelList(object):
     return _get_request(_SELF.format(c_api=_C_API_BEGINNING,
                                              api=_API_VERSION,
                                              at=self.access_token))
-
-  def get_feeds(self, personalized=False, since=None):
-    """
-    personalized: Feeds for your user
-    since: unix timestamp, brings feeds from that time
-    """
-    feeds_url = _FEEDS.format(c_api=_C_API_BEGINNING,
-                                              api=_API_VERSION,
-                                              at=self.access_token)
-    if personalized:
-      feeds_url += _PERSONALIZED_SUFFIX
-    if since is not None:
-      feeds_url += _SINCE_SUFFIX.format(since=since)
-    return _get_request(feeds_url)
-
   def get_followers(self, id_):
     return _get_request(_FOLLOWERS.format(c_api=_C_API_BEGINNING,
                                                   api=_API_VERSION,
@@ -341,7 +323,8 @@ class AngelList(object):
   def get_follows_batch(self, batch_ids):
     return _get_request(_FOLLOWS_B.format(c_api=_C_API_BEGINNING,
                                                                api=_API_VERSION,
-                                                               batch_ids=','.join(batch_ids)))
+                                                               batch_ids=','.join(batch_ids),
+                                                               at=self.access_token))
 
   def get_startup_followers(self, id_):
     return _get_request(_STARTUP_F.format(c_api=_C_API_BEGINNING,
@@ -377,7 +360,8 @@ class AngelList(object):
   def get_tags_startups(self, id_):
     return _get_request(_TAGS_STARTUPS.format(c_api=_C_API_BEGINNING,
                                                                       api=_API_VERSION,
-                                                                      id_=id_))
+                                                                      id_=id_,
+								      at=self.access_token))
 
   def get_tags_users(self, id_):
     """ Get a particular user which are tagged based on the id_
@@ -396,16 +380,6 @@ class AngelList(object):
                                         id_=id_,
                                         at=self.access_token))
 
-  def get_startup_roles_deprecated(self, id_, direction='incoming'):
-    """ Startup roles
-        Will be deprecated for the next version(2.x) api
-    """
-    return _get_request(_STARTUP_R_DEPRECATED.format(c_api=_C_API_BEGINNING,
-                                                                                    api=_API_VERSION,
-                                                                                    id_=id_,
-                                                                                    direction=direction,
-                                                                                    at=self.access_token))
-
   def get_startup_roles(self, user_id=None, startup_id=None, role=None, direction='incoming'):
     """
     user_id ->The user role you want to view
@@ -417,7 +391,8 @@ class AngelList(object):
     if user_id is None and startup_id is None:
       raise Exception("You need to provide at least one parameter")
     url = _STARTUP_R.format(c_api=_C_API_BEGINNING,
-                                          api=_API_VERSION)
+                                          api=_API_VERSION,
+                                          at=self.access_token)
     if user_id is not None:
       url += '&user_id=' + str(user_id)
     if startup_id is not None:
@@ -440,7 +415,8 @@ class AngelList(object):
     """
     url = _STARTUP_RAISING.format(c_api=_C_API_BEGINNING,
                                                                          api=_API_VERSION,
-                                                                         filter_=filter_)
+                                                                         filter_=filter_,
+                                                                         at=self.access_token)
     return _get_request(url)
 
   def get_status_updates(self, startup_id):
@@ -458,7 +434,8 @@ class AngelList(object):
     """
     return _get_request(_SLUG_SEARCH.format(c_api=_C_API_BEGINNING,
                                             api=_API_VERSION,
-                                            slug=_format_query(slug)))
+                                            slug=_format_query(slug),
+                                            at=self.access_token))
 
 
   def get_search(self, query, type_=None):
@@ -467,7 +444,8 @@ class AngelList(object):
     """
     search_url = _S_SEARCH.format(c_api=_C_API_BEGINNING,
                                   api=_API_VERSION,
-                                  query=_format_query(query))
+                                  query=_format_query(query),
+                                  at=self.access_token)
     if type_ is not None:
       search_url + _TYPE_SUFFIX.format(type_=type_)
     return _get_request(search_url)

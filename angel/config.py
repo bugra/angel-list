@@ -9,6 +9,6 @@ TWITTER_URL = 'https://twitter.com/bugraa'
 ONLINE_BIO_URL = 'http://bugra.github.io/'
 LINKEDIN_URL = 'http://www.linkedin.com/in/bugraa'
 GITHUB_URL = 'https://github.com/bugra'
-EMAIL = 'bakyildiz@cbinsights.com'
+EMAIL = 'bugraa@live.com'
 ANGELLIST_URL = 'https://angel.co/bugra-akyildiz'
 ID = 518440

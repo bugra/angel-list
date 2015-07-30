@@ -3,8 +3,8 @@ Python API for Angellist
 .. image:: http://img.shields.io/pypi/v/angel.svg?style=flat
     :target: https://pypi.python.org/pypi/angel
 
-.. image:: http://img.shields.io/travis/bugra/angel-list.svg?style=flat
-    :target: https://travis-ci.org/bugra/angel-list
+.. image:: http://jenkins.jarenglover.com/job/angel-list/badge/icon
+    :target: http://jenkins.jarenglover.com/job/angel-list
 
 .. image:: http://img.shields.io/pypi/dm/angel.svg?style=flat
     :target: https://pypi.python.org/pypi/angel
@@ -28,7 +28,7 @@ Some capabilities of module are `here <http://nbviewer.ipython.org/urls/gist.git
 Features
 --------
 #. No external dependencies
-#. Consistent Api for different features of Angellist
+#. Consistent Api for different features of Angellist - NOTE: All requests will need to be authenticated with access token
 #. Test coverage
 
 Installation
@@ -58,7 +58,8 @@ Known Issues
 #. `put` and `delete` methods are not implemented.
 #. `scope of investing` is not implemented
 #. It does not support Python 3.
-#. It requires `Access Token` for the api calls that do not require one.
+#. Your personal access token needs to be approved for the jobs endpoint - i.e. added to the "approved list"
+#. My token hasn't been approved for the job endpoint yet, thus I don't run those test in my jenkins build.  
 
 Test
 ----
